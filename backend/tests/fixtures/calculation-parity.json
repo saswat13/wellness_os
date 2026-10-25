@@ -1,0 +1,100 @@
+{
+  "days": [
+    {
+      "date": "2026-10-11",
+      "totals": {
+        "calories": 1623.7,
+        "protein": 132.25,
+        "carbs": 192.98,
+        "fat": 37.04
+      }
+    },
+    {
+      "date": "2026-10-12",
+      "totals": {
+        "calories": 1630.2,
+        "protein": 132.385,
+        "carbs": 194.39000000000001,
+        "fat": 37.055
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "totals": {
+        "calories": 1636.7,
+        "protein": 132.51999999999998,
+        "carbs": 195.79999999999998,
+        "fat": 37.07
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "totals": {
+        "calories": 1643.2,
+        "protein": 132.655,
+        "carbs": 197.21,
+        "fat": 37.085
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "totals": {
+        "calories": 1649.7,
+        "protein": 132.79,
+        "carbs": 198.62000000000003,
+        "fat": 37.1
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "totals": {
+        "calories": 1656.2,
+        "protein": 132.92499999999998,
+        "carbs": 200.03,
+        "fat": 37.115
+      }
+    },
+    {
+      "date": "2026-10-17",
+      "totals": {
+        "calories": 935.5,
+        "protein": 82.24000000000001,
+        "carbs": 117.98,
+        "fat": 14.48
+      }
+    }
+  ],
+  "workouts": [
+    {
+      "id": "mock-session-0",
+      "volume": 4575,
+      "counts": {
+        "total": 12,
+        "completed": 12,
+        "partial": 0,
+        "completedSides": 15
+      }
+    },
+    {
+      "id": "mock-session-1",
+      "volume": 4155,
+      "counts": {
+        "total": 12,
+        "completed": 12,
+        "partial": 0,
+        "completedSides": 15
+      }
+    },
+    {
+      "id": "mock-session-2",
+      "volume": 3735,
+      "counts": {
+        "total": 12,
+        "completed": 12,
+        "partial": 0,
+        "completedSides": 15
+      }
+    }
+  ],
+  "recipes": []
+}

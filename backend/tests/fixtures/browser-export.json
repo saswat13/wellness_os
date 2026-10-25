@@ -1,0 +1,2989 @@
+{
+  "exportVersion": 1,
+  "workouts": {
+    "version": 3,
+    "userId": "local-demo-user",
+    "library": [
+      {
+        "id": "pulldown",
+        "ownerId": null,
+        "source": "system",
+        "name": "Single-arm cable lat pulldown",
+        "primaryMuscle": "Lats",
+        "secondaryMuscles": ["Biceps"],
+        "movementPattern": "Vertical pull",
+        "equipment": "Cable",
+        "tags": [],
+        "trainingTypes": ["hypertrophy"],
+        "unilateral": true,
+        "coachingNotes": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides.",
+        "demoUrl": "",
+        "archived": false,
+        "createdAt": "2026-10-01T12:00:00.000Z",
+        "updatedAt": "2026-10-01T12:00:00.000Z"
+      },
+      {
+        "id": "fly",
+        "ownerId": null,
+        "source": "system",
+        "name": "Seated cable chest flyes",
+        "primaryMuscle": "Chest",
+        "secondaryMuscles": [],
+        "movementPattern": "Isolation",
+        "equipment": "Cable",
+        "tags": [],
+        "trainingTypes": ["hypertrophy"],
+        "unilateral": false,
+        "coachingNotes": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle.",
+        "demoUrl": "",
+        "archived": false,
+        "createdAt": "2026-10-01T12:00:00.000Z",
+        "updatedAt": "2026-10-01T12:00:00.000Z"
+      },
+      {
+        "id": "row",
+        "ownerId": null,
+        "source": "system",
+        "name": "Seated cable row (wide grip)",
+        "primaryMuscle": "Upper back",
+        "secondaryMuscles": ["Biceps"],
+        "movementPattern": "Horizontal pull",
+        "equipment": "Cable",
+        "tags": [],
+        "trainingTypes": ["hypertrophy"],
+        "unilateral": false,
+        "coachingNotes": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades.",
+        "demoUrl": "",
+        "archived": false,
+        "createdAt": "2026-10-01T12:00:00.000Z",
+        "updatedAt": "2026-10-01T12:00:00.000Z"
+      },
+      {
+        "id": "press",
+        "ownerId": null,
+        "source": "system",
+        "name": "Incline Smith machine chest press",
+        "primaryMuscle": "Chest",
+        "secondaryMuscles": ["Triceps", "Shoulders"],
+        "movementPattern": "Horizontal push",
+        "equipment": "Smith machine",
+        "tags": [],
+        "trainingTypes": ["hypertrophy"],
+        "unilateral": false,
+        "coachingNotes": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar.",
+        "demoUrl": "",
+        "archived": false,
+        "createdAt": "2026-10-01T12:00:00.000Z",
+        "updatedAt": "2026-10-01T12:00:00.000Z"
+      },
+      {
+        "id": "sample-custom-lateral-raise",
+        "ownerId": "local-demo-user",
+        "source": "custom",
+        "name": "Dumbbell lateral raise",
+        "primaryMuscle": "Shoulders",
+        "secondaryMuscles": [],
+        "movementPattern": "Isolation",
+        "equipment": "Dumbbell",
+        "tags": ["Shoulder day"],
+        "trainingTypes": ["hypertrophy"],
+        "unilateral": false,
+        "coachingNotes": "",
+        "demoUrl": "",
+        "archived": false,
+        "createdAt": "2026-10-01T12:00:00.000Z",
+        "updatedAt": "2026-10-01T12:00:00.000Z"
+      }
+    ],
+    "templates": [
+      {
+        "id": "template-upper-a",
+        "ownerId": "local-demo-user",
+        "name": "Upper body A",
+        "trainingType": "hypertrophy",
+        "visibility": "private",
+        "exercises": [
+          {
+            "id": "plan-pulldown",
+            "exerciseId": "pulldown",
+            "prescription": {
+              "plannedSets": 3,
+              "target": "10–12",
+              "note": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides."
+            }
+          },
+          {
+            "id": "plan-fly",
+            "exerciseId": "fly",
+            "prescription": {
+              "plannedSets": 3,
+              "target": "12–15",
+              "note": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle."
+            }
+          },
+          {
+            "id": "plan-row",
+            "exerciseId": "row",
+            "prescription": {
+              "plannedSets": 3,
+              "target": "8–12",
+              "note": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades."
+            }
+          },
+          {
+            "id": "plan-press",
+            "exerciseId": "press",
+            "prescription": {
+              "plannedSets": 3,
+              "target": "8–10",
+              "note": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar."
+            }
+          }
+        ],
+        "createdAt": "2026-10-01T12:00:00.000Z",
+        "updatedAt": "2026-10-01T12:00:00.000Z"
+      }
+    ],
+    "session": {
+      "id": "initial-session",
+      "ownerId": "local-demo-user",
+      "templateId": "template-upper-a",
+      "name": "Upper body A",
+      "trainingType": "hypertrophy",
+      "exercises": [
+        {
+          "sameWeight": true,
+          "id": "pulldown",
+          "exerciseId": "pulldown",
+          "snapshot": {
+            "id": "pulldown",
+            "ownerId": null,
+            "source": "system",
+            "name": "Single-arm cable lat pulldown",
+            "primaryMuscle": "Lats",
+            "secondaryMuscles": ["Biceps"],
+            "movementPattern": "Vertical pull",
+            "equipment": "Cable",
+            "tags": [],
+            "trainingTypes": ["hypertrophy"],
+            "unilateral": true,
+            "coachingNotes": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides.",
+            "demoUrl": "",
+            "archived": false,
+            "createdAt": "2026-10-01T12:00:00.000Z",
+            "updatedAt": "2026-10-01T12:00:00.000Z"
+          },
+          "prescription": {
+            "plannedSets": 3,
+            "target": "10–12",
+            "note": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides."
+          }
+        },
+        {
+          "sameWeight": true,
+          "id": "fly",
+          "exerciseId": "fly",
+          "snapshot": {
+            "id": "fly",
+            "ownerId": null,
+            "source": "system",
+            "name": "Seated cable chest flyes",
+            "primaryMuscle": "Chest",
+            "secondaryMuscles": [],
+            "movementPattern": "Isolation",
+            "equipment": "Cable",
+            "tags": [],
+            "trainingTypes": ["hypertrophy"],
+            "unilateral": false,
+            "coachingNotes": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle.",
+            "demoUrl": "",
+            "archived": false,
+            "createdAt": "2026-10-01T12:00:00.000Z",
+            "updatedAt": "2026-10-01T12:00:00.000Z"
+          },
+          "prescription": {
+            "plannedSets": 3,
+            "target": "12–15",
+            "note": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle."
+          }
+        },
+        {
+          "sameWeight": true,
+          "id": "row",
+          "exerciseId": "row",
+          "snapshot": {
+            "id": "row",
+            "ownerId": null,
+            "source": "system",
+            "name": "Seated cable row (wide grip)",
+            "primaryMuscle": "Upper back",
+            "secondaryMuscles": ["Biceps"],
+            "movementPattern": "Horizontal pull",
+            "equipment": "Cable",
+            "tags": [],
+            "trainingTypes": ["hypertrophy"],
+            "unilateral": false,
+            "coachingNotes": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades.",
+            "demoUrl": "",
+            "archived": false,
+            "createdAt": "2026-10-01T12:00:00.000Z",
+            "updatedAt": "2026-10-01T12:00:00.000Z"
+          },
+          "prescription": {
+            "plannedSets": 3,
+            "target": "8–12",
+            "note": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades."
+          }
+        },
+        {
+          "sameWeight": true,
+          "id": "press",
+          "exerciseId": "press",
+          "snapshot": {
+            "id": "press",
+            "ownerId": null,
+            "source": "system",
+            "name": "Incline Smith machine chest press",
+            "primaryMuscle": "Chest",
+            "secondaryMuscles": ["Triceps", "Shoulders"],
+            "movementPattern": "Horizontal push",
+            "equipment": "Smith machine",
+            "tags": [],
+            "trainingTypes": ["hypertrophy"],
+            "unilateral": false,
+            "coachingNotes": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar.",
+            "demoUrl": "",
+            "archived": false,
+            "createdAt": "2026-10-01T12:00:00.000Z",
+            "updatedAt": "2026-10-01T12:00:00.000Z"
+          },
+          "prescription": {
+            "plannedSets": 3,
+            "target": "8–10",
+            "note": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar."
+          }
+        }
+      ],
+      "logs": {
+        "pulldown": [
+          {
+            "id": "74294f5b-2bbd-4031-a5b1-3879d3cd04fa",
+            "groupId": "e66b9767-7e32-47df-af87-2d11de026165",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "pulldown",
+            "exerciseId": "pulldown",
+            "side": "L",
+            "reps": 12,
+            "kg": 22.5,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "55ab474d-28c7-4433-bcdb-ffc2006cc762",
+            "groupId": "e66b9767-7e32-47df-af87-2d11de026165",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "pulldown",
+            "exerciseId": "pulldown",
+            "side": "R",
+            "reps": 12,
+            "kg": 22.5,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "352441f9-546a-4ffd-b00e-a9ee440e062b",
+            "groupId": "bdefc158-308a-451c-a496-fdac7b85cbeb",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "pulldown",
+            "exerciseId": "pulldown",
+            "side": "L",
+            "reps": 11,
+            "kg": 22.5,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "1ee69a5e-ecb6-45ac-b1a4-aa51de8011e7",
+            "groupId": "bdefc158-308a-451c-a496-fdac7b85cbeb",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "pulldown",
+            "exerciseId": "pulldown",
+            "side": "R",
+            "reps": 11,
+            "kg": 22.5,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "ee109904-77a5-49bb-9e1d-3f5b953fa8a9",
+            "groupId": "80f86225-4334-4f6a-875e-6869ee821a20",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "pulldown",
+            "exerciseId": "pulldown",
+            "side": "L",
+            "reps": 10,
+            "kg": 22.5,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "790fb94e-dab4-4e7d-a5a0-be41dbcdd840",
+            "groupId": "80f86225-4334-4f6a-875e-6869ee821a20",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "pulldown",
+            "exerciseId": "pulldown",
+            "side": "R",
+            "reps": 10,
+            "kg": 22.5,
+            "rpe": "",
+            "done": false
+          }
+        ],
+        "fly": [
+          {
+            "id": "4334d335-2445-4b94-83ee-0108c4b3fe1d",
+            "groupId": "7ee545ff-efb4-4093-8522-601e6ea4ec5d",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "fly",
+            "exerciseId": "fly",
+            "side": "both",
+            "reps": 15,
+            "kg": 12.5,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "d3d8680a-94a7-4841-abba-d72247937a4c",
+            "groupId": "8cb53ccc-c472-4f36-bdee-6abf3a7534a9",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "fly",
+            "exerciseId": "fly",
+            "side": "both",
+            "reps": 14,
+            "kg": 12.5,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "fa7a9f0f-f860-4c09-bf0d-8ff87cda7cf4",
+            "groupId": "bac6d4ec-bc27-463b-89c2-51d777e3706e",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "fly",
+            "exerciseId": "fly",
+            "side": "both",
+            "reps": 13,
+            "kg": 12.5,
+            "rpe": "",
+            "done": false
+          }
+        ],
+        "row": [
+          {
+            "id": "6e87aab3-b87e-4d9a-90fa-88f7d3f54f32",
+            "groupId": "7679cc35-d816-492c-af86-f2f440723708",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "row",
+            "exerciseId": "row",
+            "side": "both",
+            "reps": 12,
+            "kg": 45,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "db931554-9e30-43ec-b2fe-3efd7be8ef7a",
+            "groupId": "d05ba302-4225-402e-87ed-e0f15b1b2fcd",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "row",
+            "exerciseId": "row",
+            "side": "both",
+            "reps": 11,
+            "kg": 45,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "e94c05d0-d93a-4b03-98ba-c0662bdd9f1b",
+            "groupId": "0984fd9a-2f17-4005-85d4-5d8bc23a3763",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "row",
+            "exerciseId": "row",
+            "side": "both",
+            "reps": 10,
+            "kg": 45,
+            "rpe": "",
+            "done": false
+          }
+        ],
+        "press": [
+          {
+            "id": "59eacefa-e431-4114-a473-05aeb2192c68",
+            "groupId": "da7bf807-e9fe-4dd1-8f6c-1c2e9fa75e87",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "press",
+            "exerciseId": "press",
+            "side": "both",
+            "reps": 10,
+            "kg": 40,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "cca30169-d9d9-444c-8325-61b4476520af",
+            "groupId": "d55f86c2-56df-4a6c-9677-6b13924fbca2",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "press",
+            "exerciseId": "press",
+            "side": "both",
+            "reps": 9,
+            "kg": 40,
+            "rpe": "",
+            "done": false
+          },
+          {
+            "id": "0e07badf-ac20-4fe5-a9c7-14f7141a3d0c",
+            "groupId": "ae5b5042-a1f0-4316-9ddd-b3f278775cc3",
+            "ownerId": "local-demo-user",
+            "sessionId": "initial-session",
+            "sessionExerciseId": "press",
+            "exerciseId": "press",
+            "side": "both",
+            "reps": 8,
+            "kg": 40,
+            "rpe": "",
+            "done": false
+          }
+        ]
+      },
+      "notes": "",
+      "unit": "kg",
+      "finished": false,
+      "started": 1792293112470,
+      "completedAt": null,
+      "mock": false
+    },
+    "history": [
+      {
+        "id": "mock-session-0",
+        "ownerId": "local-demo-user",
+        "templateId": "template-upper-a",
+        "name": "Upper body A",
+        "trainingType": "hypertrophy",
+        "exercises": [
+          {
+            "id": "pulldown",
+            "exerciseId": "pulldown",
+            "snapshot": {
+              "id": "pulldown",
+              "ownerId": null,
+              "source": "system",
+              "name": "Single-arm cable lat pulldown",
+              "primaryMuscle": "Lats",
+              "secondaryMuscles": ["Biceps"],
+              "movementPattern": "Vertical pull",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": true,
+              "coachingNotes": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "10–12",
+              "note": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides."
+            }
+          },
+          {
+            "id": "fly",
+            "exerciseId": "fly",
+            "snapshot": {
+              "id": "fly",
+              "ownerId": null,
+              "source": "system",
+              "name": "Seated cable chest flyes",
+              "primaryMuscle": "Chest",
+              "secondaryMuscles": [],
+              "movementPattern": "Isolation",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "12–15",
+              "note": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle."
+            }
+          },
+          {
+            "id": "row",
+            "exerciseId": "row",
+            "snapshot": {
+              "id": "row",
+              "ownerId": null,
+              "source": "system",
+              "name": "Seated cable row (wide grip)",
+              "primaryMuscle": "Upper back",
+              "secondaryMuscles": ["Biceps"],
+              "movementPattern": "Horizontal pull",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "8–12",
+              "note": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades."
+            }
+          },
+          {
+            "id": "press",
+            "exerciseId": "press",
+            "snapshot": {
+              "id": "press",
+              "ownerId": null,
+              "source": "system",
+              "name": "Incline Smith machine chest press",
+              "primaryMuscle": "Chest",
+              "secondaryMuscles": ["Triceps", "Shoulders"],
+              "movementPattern": "Horizontal push",
+              "equipment": "Smith machine",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "8–10",
+              "note": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar."
+            }
+          }
+        ],
+        "logs": {
+          "pulldown": [
+            {
+              "reps": 12,
+              "kg": 22.5,
+              "side": "L",
+              "id": "mock-session-0-pulldown-0",
+              "groupId": "mock-session-0-pulldown-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 12,
+              "kg": 22.5,
+              "side": "R",
+              "id": "mock-session-0-pulldown-1",
+              "groupId": "mock-session-0-pulldown-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 22.5,
+              "side": "L",
+              "id": "mock-session-0-pulldown-2",
+              "groupId": "mock-session-0-pulldown-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 22.5,
+              "side": "R",
+              "id": "mock-session-0-pulldown-3",
+              "groupId": "mock-session-0-pulldown-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 22.5,
+              "side": "L",
+              "id": "mock-session-0-pulldown-4",
+              "groupId": "mock-session-0-pulldown-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 22.5,
+              "side": "R",
+              "id": "mock-session-0-pulldown-5",
+              "groupId": "mock-session-0-pulldown-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "fly": [
+            {
+              "reps": 15,
+              "kg": 12.5,
+              "side": "both",
+              "id": "mock-session-0-fly-0",
+              "groupId": "mock-session-0-fly-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 14,
+              "kg": 12.5,
+              "side": "both",
+              "id": "mock-session-0-fly-1",
+              "groupId": "mock-session-0-fly-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 13,
+              "kg": 12.5,
+              "side": "both",
+              "id": "mock-session-0-fly-2",
+              "groupId": "mock-session-0-fly-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "row": [
+            {
+              "reps": 12,
+              "kg": 45,
+              "side": "both",
+              "id": "mock-session-0-row-0",
+              "groupId": "mock-session-0-row-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 45,
+              "side": "both",
+              "id": "mock-session-0-row-1",
+              "groupId": "mock-session-0-row-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 45,
+              "side": "both",
+              "id": "mock-session-0-row-2",
+              "groupId": "mock-session-0-row-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "press": [
+            {
+              "reps": 10,
+              "kg": 40,
+              "side": "both",
+              "id": "mock-session-0-press-0",
+              "groupId": "mock-session-0-press-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 9,
+              "kg": 40,
+              "side": "both",
+              "id": "mock-session-0-press-1",
+              "groupId": "mock-session-0-press-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 8,
+              "kg": 40,
+              "side": "both",
+              "id": "mock-session-0-press-2",
+              "groupId": "mock-session-0-press-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-0",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            }
+          ]
+        },
+        "notes": "",
+        "unit": "kg",
+        "finished": true,
+        "started": 1791288000000,
+        "completedAt": "2026-10-06T13:00:00Z",
+        "mock": true
+      },
+      {
+        "id": "mock-session-1",
+        "ownerId": "local-demo-user",
+        "templateId": "template-upper-a",
+        "name": "Upper body A",
+        "trainingType": "hypertrophy",
+        "exercises": [
+          {
+            "id": "pulldown",
+            "exerciseId": "pulldown",
+            "snapshot": {
+              "id": "pulldown",
+              "ownerId": null,
+              "source": "system",
+              "name": "Single-arm cable lat pulldown",
+              "primaryMuscle": "Lats",
+              "secondaryMuscles": ["Biceps"],
+              "movementPattern": "Vertical pull",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": true,
+              "coachingNotes": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "10–12",
+              "note": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides."
+            }
+          },
+          {
+            "id": "fly",
+            "exerciseId": "fly",
+            "snapshot": {
+              "id": "fly",
+              "ownerId": null,
+              "source": "system",
+              "name": "Seated cable chest flyes",
+              "primaryMuscle": "Chest",
+              "secondaryMuscles": [],
+              "movementPattern": "Isolation",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "12–15",
+              "note": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle."
+            }
+          },
+          {
+            "id": "row",
+            "exerciseId": "row",
+            "snapshot": {
+              "id": "row",
+              "ownerId": null,
+              "source": "system",
+              "name": "Seated cable row (wide grip)",
+              "primaryMuscle": "Upper back",
+              "secondaryMuscles": ["Biceps"],
+              "movementPattern": "Horizontal pull",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "8–12",
+              "note": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades."
+            }
+          },
+          {
+            "id": "press",
+            "exerciseId": "press",
+            "snapshot": {
+              "id": "press",
+              "ownerId": null,
+              "source": "system",
+              "name": "Incline Smith machine chest press",
+              "primaryMuscle": "Chest",
+              "secondaryMuscles": ["Triceps", "Shoulders"],
+              "movementPattern": "Horizontal push",
+              "equipment": "Smith machine",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "8–10",
+              "note": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar."
+            }
+          }
+        ],
+        "logs": {
+          "pulldown": [
+            {
+              "reps": 12,
+              "kg": 20,
+              "side": "L",
+              "id": "mock-session-1-pulldown-0",
+              "groupId": "mock-session-1-pulldown-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 12,
+              "kg": 20,
+              "side": "R",
+              "id": "mock-session-1-pulldown-1",
+              "groupId": "mock-session-1-pulldown-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 20,
+              "side": "L",
+              "id": "mock-session-1-pulldown-2",
+              "groupId": "mock-session-1-pulldown-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 20,
+              "side": "R",
+              "id": "mock-session-1-pulldown-3",
+              "groupId": "mock-session-1-pulldown-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 20,
+              "side": "L",
+              "id": "mock-session-1-pulldown-4",
+              "groupId": "mock-session-1-pulldown-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 20,
+              "side": "R",
+              "id": "mock-session-1-pulldown-5",
+              "groupId": "mock-session-1-pulldown-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "fly": [
+            {
+              "reps": 15,
+              "kg": 10,
+              "side": "both",
+              "id": "mock-session-1-fly-0",
+              "groupId": "mock-session-1-fly-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 14,
+              "kg": 10,
+              "side": "both",
+              "id": "mock-session-1-fly-1",
+              "groupId": "mock-session-1-fly-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 13,
+              "kg": 10,
+              "side": "both",
+              "id": "mock-session-1-fly-2",
+              "groupId": "mock-session-1-fly-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "row": [
+            {
+              "reps": 12,
+              "kg": 42.5,
+              "side": "both",
+              "id": "mock-session-1-row-0",
+              "groupId": "mock-session-1-row-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 42.5,
+              "side": "both",
+              "id": "mock-session-1-row-1",
+              "groupId": "mock-session-1-row-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 42.5,
+              "side": "both",
+              "id": "mock-session-1-row-2",
+              "groupId": "mock-session-1-row-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "press": [
+            {
+              "reps": 10,
+              "kg": 37.5,
+              "side": "both",
+              "id": "mock-session-1-press-0",
+              "groupId": "mock-session-1-press-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 9,
+              "kg": 37.5,
+              "side": "both",
+              "id": "mock-session-1-press-1",
+              "groupId": "mock-session-1-press-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 8,
+              "kg": 37.5,
+              "side": "both",
+              "id": "mock-session-1-press-2",
+              "groupId": "mock-session-1-press-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-1",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            }
+          ]
+        },
+        "notes": "",
+        "unit": "kg",
+        "finished": true,
+        "started": 1790683200000,
+        "completedAt": "2026-09-29T13:00:00Z",
+        "mock": true
+      },
+      {
+        "id": "mock-session-2",
+        "ownerId": "local-demo-user",
+        "templateId": "template-upper-a",
+        "name": "Upper body A",
+        "trainingType": "hypertrophy",
+        "exercises": [
+          {
+            "id": "pulldown",
+            "exerciseId": "pulldown",
+            "snapshot": {
+              "id": "pulldown",
+              "ownerId": null,
+              "source": "system",
+              "name": "Single-arm cable lat pulldown",
+              "primaryMuscle": "Lats",
+              "secondaryMuscles": ["Biceps"],
+              "movementPattern": "Vertical pull",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": true,
+              "coachingNotes": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "10–12",
+              "note": "Drive your elbow toward your hip. Pause at the bottom; control the stretch. Match both sides."
+            }
+          },
+          {
+            "id": "fly",
+            "exerciseId": "fly",
+            "snapshot": {
+              "id": "fly",
+              "ownerId": null,
+              "source": "system",
+              "name": "Seated cable chest flyes",
+              "primaryMuscle": "Chest",
+              "secondaryMuscles": [],
+              "movementPattern": "Isolation",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "12–15",
+              "note": "Keep a soft bend in your elbows. Bring your hands together without shrugging. Load is per handle."
+            }
+          },
+          {
+            "id": "row",
+            "exerciseId": "row",
+            "snapshot": {
+              "id": "row",
+              "ownerId": null,
+              "source": "system",
+              "name": "Seated cable row (wide grip)",
+              "primaryMuscle": "Upper back",
+              "secondaryMuscles": ["Biceps"],
+              "movementPattern": "Horizontal pull",
+              "equipment": "Cable",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "8–12",
+              "note": "Keep your torso steady. Pull toward your lower chest and squeeze your shoulder blades."
+            }
+          },
+          {
+            "id": "press",
+            "exerciseId": "press",
+            "snapshot": {
+              "id": "press",
+              "ownerId": null,
+              "source": "system",
+              "name": "Incline Smith machine chest press",
+              "primaryMuscle": "Chest",
+              "secondaryMuscles": ["Triceps", "Shoulders"],
+              "movementPattern": "Horizontal push",
+              "equipment": "Smith machine",
+              "tags": [],
+              "trainingTypes": ["hypertrophy"],
+              "unilateral": false,
+              "coachingNotes": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar.",
+              "demoUrl": "",
+              "archived": false,
+              "createdAt": "2026-10-01T12:00:00.000Z",
+              "updatedAt": "2026-10-01T12:00:00.000Z"
+            },
+            "sameWeight": true,
+            "prescription": {
+              "plannedSets": 3,
+              "target": "8–10",
+              "note": "Set the bench to 30°. Lower with control and keep your feet planted. Log total external load, excluding the bar."
+            }
+          }
+        ],
+        "logs": {
+          "pulldown": [
+            {
+              "reps": 12,
+              "kg": 17.5,
+              "side": "L",
+              "id": "mock-session-2-pulldown-0",
+              "groupId": "mock-session-2-pulldown-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 12,
+              "kg": 17.5,
+              "side": "R",
+              "id": "mock-session-2-pulldown-1",
+              "groupId": "mock-session-2-pulldown-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 17.5,
+              "side": "L",
+              "id": "mock-session-2-pulldown-2",
+              "groupId": "mock-session-2-pulldown-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 17.5,
+              "side": "R",
+              "id": "mock-session-2-pulldown-3",
+              "groupId": "mock-session-2-pulldown-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 17.5,
+              "side": "L",
+              "id": "mock-session-2-pulldown-4",
+              "groupId": "mock-session-2-pulldown-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 17.5,
+              "side": "R",
+              "id": "mock-session-2-pulldown-5",
+              "groupId": "mock-session-2-pulldown-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "pulldown",
+              "exerciseId": "pulldown",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "fly": [
+            {
+              "reps": 15,
+              "kg": 7.5,
+              "side": "both",
+              "id": "mock-session-2-fly-0",
+              "groupId": "mock-session-2-fly-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 14,
+              "kg": 7.5,
+              "side": "both",
+              "id": "mock-session-2-fly-1",
+              "groupId": "mock-session-2-fly-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 13,
+              "kg": 7.5,
+              "side": "both",
+              "id": "mock-session-2-fly-2",
+              "groupId": "mock-session-2-fly-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "fly",
+              "exerciseId": "fly",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "row": [
+            {
+              "reps": 12,
+              "kg": 40,
+              "side": "both",
+              "id": "mock-session-2-row-0",
+              "groupId": "mock-session-2-row-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 11,
+              "kg": 40,
+              "side": "both",
+              "id": "mock-session-2-row-1",
+              "groupId": "mock-session-2-row-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 10,
+              "kg": 40,
+              "side": "both",
+              "id": "mock-session-2-row-2",
+              "groupId": "mock-session-2-row-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "row",
+              "exerciseId": "row",
+              "rpe": "",
+              "done": true
+            }
+          ],
+          "press": [
+            {
+              "reps": 10,
+              "kg": 35,
+              "side": "both",
+              "id": "mock-session-2-press-0",
+              "groupId": "mock-session-2-press-group-0",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 9,
+              "kg": 35,
+              "side": "both",
+              "id": "mock-session-2-press-1",
+              "groupId": "mock-session-2-press-group-1",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            },
+            {
+              "reps": 8,
+              "kg": 35,
+              "side": "both",
+              "id": "mock-session-2-press-2",
+              "groupId": "mock-session-2-press-group-2",
+              "ownerId": "local-demo-user",
+              "sessionId": "mock-session-2",
+              "sessionExerciseId": "press",
+              "exerciseId": "press",
+              "rpe": "",
+              "done": true
+            }
+          ]
+        },
+        "notes": "",
+        "unit": "kg",
+        "finished": true,
+        "started": 1790078400000,
+        "completedAt": "2026-09-22T13:00:00Z",
+        "mock": true
+      }
+    ]
+  },
+  "nutrition": {
+    "version": 1,
+    "user": {
+      "id": "local-demo-user",
+      "name": "FORM Athlete",
+      "unit": "kg",
+      "timeZone": "America/Los_Angeles"
+    },
+    "goals": {
+      "id": "nutrition-goals",
+      "ownerId": "local-demo-user",
+      "calories": 2400,
+      "protein": 160,
+      "carbs": 290,
+      "fat": 67
+    },
+    "foods": [
+      {
+        "id": "oats",
+        "ownerId": null,
+        "source": "system",
+        "name": "Rolled oats",
+        "preparation": "dry",
+        "per100g": {
+          "calories": 379,
+          "protein": 13.2,
+          "carbs": 67.7,
+          "fat": 6.5
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "yogurt",
+        "ownerId": null,
+        "source": "system",
+        "name": "Greek yogurt · plain",
+        "preparation": "packaged",
+        "per100g": {
+          "calories": 73,
+          "protein": 10,
+          "carbs": 3.9,
+          "fat": 2
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "banana",
+        "ownerId": null,
+        "source": "system",
+        "name": "Banana",
+        "preparation": "raw",
+        "per100g": {
+          "calories": 89,
+          "protein": 1.1,
+          "carbs": 22.8,
+          "fat": 0.3
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "rice-dry",
+        "ownerId": null,
+        "source": "system",
+        "name": "Basmati rice",
+        "preparation": "dry",
+        "per100g": {
+          "calories": 360,
+          "protein": 7,
+          "carbs": 79,
+          "fat": 0.7
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "rice-cooked",
+        "ownerId": null,
+        "source": "system",
+        "name": "Basmati rice",
+        "preparation": "cooked",
+        "per100g": {
+          "calories": 130,
+          "protein": 2.7,
+          "carbs": 28.2,
+          "fat": 0.3
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "chicken-raw",
+        "ownerId": null,
+        "source": "system",
+        "name": "Chicken breast",
+        "preparation": "raw",
+        "per100g": {
+          "calories": 120,
+          "protein": 22.5,
+          "carbs": 0,
+          "fat": 2.6
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "chicken-cooked",
+        "ownerId": null,
+        "source": "system",
+        "name": "Chicken breast",
+        "preparation": "cooked",
+        "per100g": {
+          "calories": 165,
+          "protein": 31,
+          "carbs": 0,
+          "fat": 3.6
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "broccoli",
+        "ownerId": null,
+        "source": "system",
+        "name": "Broccoli",
+        "preparation": "cooked",
+        "per100g": {
+          "calories": 35,
+          "protein": 2.4,
+          "carbs": 7.2,
+          "fat": 0.4
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "olive-oil",
+        "ownerId": null,
+        "source": "system",
+        "name": "Olive oil",
+        "preparation": "packaged",
+        "per100g": {
+          "calories": 884,
+          "protein": 0,
+          "carbs": 0,
+          "fat": 100
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "eggs",
+        "ownerId": null,
+        "source": "system",
+        "name": "Whole egg",
+        "preparation": "raw",
+        "per100g": {
+          "calories": 143,
+          "protein": 12.6,
+          "carbs": 0.7,
+          "fat": 9.5
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "bread",
+        "ownerId": null,
+        "source": "system",
+        "name": "Wholegrain bread",
+        "preparation": "packaged",
+        "per100g": {
+          "calories": 247,
+          "protein": 13,
+          "carbs": 41,
+          "fat": 4.2
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      },
+      {
+        "id": "berries",
+        "ownerId": null,
+        "source": "system",
+        "name": "Blueberries",
+        "preparation": "raw",
+        "per100g": {
+          "calories": 57,
+          "protein": 0.7,
+          "carbs": 14.5,
+          "fat": 0.3
+        },
+        "sourceInfo": "Illustrative mock nutrition values; check your own food label."
+      }
+    ],
+    "recipes": [],
+    "diary": [
+      {
+        "id": "226c407d-07aa-4090-80cc-6cbd4546f648",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Breakfast",
+        "sourceId": "oats",
+        "sourceType": "food",
+        "grams": 60,
+        "snapshot": {
+          "name": "Rolled oats",
+          "preparation": "dry",
+          "per100g": {
+            "calories": 379,
+            "protein": 13.2,
+            "carbs": 67.7,
+            "fat": 6.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.496Z"
+      },
+      {
+        "id": "062fb025-ebcd-46d2-b151-7574017f388d",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Breakfast",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 200,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.500Z"
+      },
+      {
+        "id": "8f84469d-f058-488e-9988-98422b076adc",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Breakfast",
+        "sourceId": "berries",
+        "sourceType": "food",
+        "grams": 80,
+        "snapshot": {
+          "name": "Blueberries",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 57,
+            "protein": 0.7,
+            "carbs": 14.5,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.500Z"
+      },
+      {
+        "id": "692123df-53b0-43fc-9fe4-d75b5062a1c2",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Lunch",
+        "sourceId": "rice-cooked",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Basmati rice",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.500Z"
+      },
+      {
+        "id": "b226025b-235c-422f-9367-2863b97089e9",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Lunch",
+        "sourceId": "chicken-cooked",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Chicken breast",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.500Z"
+      },
+      {
+        "id": "933a7b11-cc67-4546-99bc-99c88ab4e547",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Lunch",
+        "sourceId": "broccoli",
+        "sourceType": "food",
+        "grams": 100,
+        "snapshot": {
+          "name": "Broccoli",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 35,
+            "protein": 2.4,
+            "carbs": 7.2,
+            "fat": 0.4
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.500Z"
+      },
+      {
+        "id": "736a24cf-761c-4777-bc23-c359d7c1f739",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Dinner",
+        "sourceId": "bread",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Wholegrain bread",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 247,
+            "protein": 13,
+            "carbs": 41,
+            "fat": 4.2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.500Z"
+      },
+      {
+        "id": "021982f6-e93b-421d-9ebf-5d78d2f7067e",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Dinner",
+        "sourceId": "eggs",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Whole egg",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 143,
+            "protein": 12.6,
+            "carbs": 0.7,
+            "fat": 9.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.500Z"
+      },
+      {
+        "id": "4628e057-dbec-4f18-a194-dcde253a83b9",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Snacks",
+        "sourceId": "banana",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Banana",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 89,
+            "protein": 1.1,
+            "carbs": 22.8,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.500Z"
+      },
+      {
+        "id": "9fd76288-3579-4672-91aa-41a343bc28c3",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-11",
+        "meal": "Snacks",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "e35723f3-a84f-4974-bfbc-33357df1238f",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Breakfast",
+        "sourceId": "oats",
+        "sourceType": "food",
+        "grams": 60,
+        "snapshot": {
+          "name": "Rolled oats",
+          "preparation": "dry",
+          "per100g": {
+            "calories": 379,
+            "protein": 13.2,
+            "carbs": 67.7,
+            "fat": 6.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "8a06bc1d-072b-43cb-a5f0-27557e1b7cc7",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Breakfast",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 200,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "fc833176-492d-41b5-bf09-4dc5e518a5d5",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Breakfast",
+        "sourceId": "berries",
+        "sourceType": "food",
+        "grams": 80,
+        "snapshot": {
+          "name": "Blueberries",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 57,
+            "protein": 0.7,
+            "carbs": 14.5,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "6eec0a27-9e81-47e5-a075-b25ff6b6c286",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Lunch",
+        "sourceId": "rice-cooked",
+        "sourceType": "food",
+        "grams": 155,
+        "snapshot": {
+          "name": "Basmati rice",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "422c5752-68dd-4ca0-a228-6e204f99d6d0",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Lunch",
+        "sourceId": "chicken-cooked",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Chicken breast",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "720fade9-f503-4753-84ae-28c42d3bfcba",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Lunch",
+        "sourceId": "broccoli",
+        "sourceType": "food",
+        "grams": 100,
+        "snapshot": {
+          "name": "Broccoli",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 35,
+            "protein": 2.4,
+            "carbs": 7.2,
+            "fat": 0.4
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "fb74327c-6865-4980-936f-e65699c996d7",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Dinner",
+        "sourceId": "bread",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Wholegrain bread",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 247,
+            "protein": 13,
+            "carbs": 41,
+            "fat": 4.2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "46aaf02c-7e28-48c4-828e-cf884354645c",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Dinner",
+        "sourceId": "eggs",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Whole egg",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 143,
+            "protein": 12.6,
+            "carbs": 0.7,
+            "fat": 9.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "fba05740-1452-47a9-a091-1da426080e3d",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Snacks",
+        "sourceId": "banana",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Banana",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 89,
+            "protein": 1.1,
+            "carbs": 22.8,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "593264a7-756c-4090-987d-cb8f38d76c65",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-12",
+        "meal": "Snacks",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "4e8fd0bf-9eb8-4c4a-91df-beeadfabd818",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Breakfast",
+        "sourceId": "oats",
+        "sourceType": "food",
+        "grams": 60,
+        "snapshot": {
+          "name": "Rolled oats",
+          "preparation": "dry",
+          "per100g": {
+            "calories": 379,
+            "protein": 13.2,
+            "carbs": 67.7,
+            "fat": 6.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "b319c7ae-030e-41b3-a7e4-68d4408f4214",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Breakfast",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 200,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "359c9dbf-c592-44bc-853c-c1d79e8fc7a7",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Breakfast",
+        "sourceId": "berries",
+        "sourceType": "food",
+        "grams": 80,
+        "snapshot": {
+          "name": "Blueberries",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 57,
+            "protein": 0.7,
+            "carbs": 14.5,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.501Z"
+      },
+      {
+        "id": "e565ef74-18e0-4264-bb14-96882d5f48c2",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Lunch",
+        "sourceId": "rice-cooked",
+        "sourceType": "food",
+        "grams": 160,
+        "snapshot": {
+          "name": "Basmati rice",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "14df4024-8f8b-4ca2-8449-20c538719546",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Lunch",
+        "sourceId": "chicken-cooked",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Chicken breast",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "b5569a91-e3ad-440b-8e97-a359166ae2ac",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Lunch",
+        "sourceId": "broccoli",
+        "sourceType": "food",
+        "grams": 100,
+        "snapshot": {
+          "name": "Broccoli",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 35,
+            "protein": 2.4,
+            "carbs": 7.2,
+            "fat": 0.4
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "aaaea67b-cc27-485c-b47b-ca417ebca78a",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Dinner",
+        "sourceId": "bread",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Wholegrain bread",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 247,
+            "protein": 13,
+            "carbs": 41,
+            "fat": 4.2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "30dcc9bd-2150-42ed-acef-7a88a4096145",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Dinner",
+        "sourceId": "eggs",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Whole egg",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 143,
+            "protein": 12.6,
+            "carbs": 0.7,
+            "fat": 9.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "bfd6c1d4-f8ec-4a98-bdc9-297e3d0a57f8",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Snacks",
+        "sourceId": "banana",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Banana",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 89,
+            "protein": 1.1,
+            "carbs": 22.8,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "53d08f5d-3c2e-432e-a9de-24add271e153",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-13",
+        "meal": "Snacks",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "a0111c32-e5de-4245-9f87-d3e6ac7534a5",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Breakfast",
+        "sourceId": "oats",
+        "sourceType": "food",
+        "grams": 60,
+        "snapshot": {
+          "name": "Rolled oats",
+          "preparation": "dry",
+          "per100g": {
+            "calories": 379,
+            "protein": 13.2,
+            "carbs": 67.7,
+            "fat": 6.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "3f16a23f-fecf-42a9-ade9-0bf5aa76220e",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Breakfast",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 200,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.502Z"
+      },
+      {
+        "id": "2a411ba6-d49c-490e-8ceb-ecb0456ef871",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Breakfast",
+        "sourceId": "berries",
+        "sourceType": "food",
+        "grams": 80,
+        "snapshot": {
+          "name": "Blueberries",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 57,
+            "protein": 0.7,
+            "carbs": 14.5,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "810890b8-958a-41e6-afc9-757c070ea32d",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Lunch",
+        "sourceId": "rice-cooked",
+        "sourceType": "food",
+        "grams": 165,
+        "snapshot": {
+          "name": "Basmati rice",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "b3933e13-c6a7-42dd-ba2a-7e754517412f",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Lunch",
+        "sourceId": "chicken-cooked",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Chicken breast",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "3b9a054b-0607-49aa-a1a8-74173792c3bb",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Lunch",
+        "sourceId": "broccoli",
+        "sourceType": "food",
+        "grams": 100,
+        "snapshot": {
+          "name": "Broccoli",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 35,
+            "protein": 2.4,
+            "carbs": 7.2,
+            "fat": 0.4
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "efe45bb0-a7d0-476e-ac17-467c8c633778",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Dinner",
+        "sourceId": "bread",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Wholegrain bread",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 247,
+            "protein": 13,
+            "carbs": 41,
+            "fat": 4.2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "c841ac08-5276-4beb-bea4-7719e90d370a",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Dinner",
+        "sourceId": "eggs",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Whole egg",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 143,
+            "protein": 12.6,
+            "carbs": 0.7,
+            "fat": 9.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "609b9aae-8121-4e47-868b-2f45b95b3017",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Snacks",
+        "sourceId": "banana",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Banana",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 89,
+            "protein": 1.1,
+            "carbs": 22.8,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "3761aa76-9ac2-45f7-b5bc-f1e2eeff4ff5",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-14",
+        "meal": "Snacks",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "5fdd4dbb-aadc-496f-8ee9-5716650f6920",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Breakfast",
+        "sourceId": "oats",
+        "sourceType": "food",
+        "grams": 60,
+        "snapshot": {
+          "name": "Rolled oats",
+          "preparation": "dry",
+          "per100g": {
+            "calories": 379,
+            "protein": 13.2,
+            "carbs": 67.7,
+            "fat": 6.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "f7bbc043-00fd-41b9-8ecd-71c303efcaba",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Breakfast",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 200,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "268c28ba-ea43-43ef-871b-ed0bb008bd8e",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Breakfast",
+        "sourceId": "berries",
+        "sourceType": "food",
+        "grams": 80,
+        "snapshot": {
+          "name": "Blueberries",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 57,
+            "protein": 0.7,
+            "carbs": 14.5,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "da542f74-2bbe-4cbb-a3b0-7d897d3c6249",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Lunch",
+        "sourceId": "rice-cooked",
+        "sourceType": "food",
+        "grams": 170,
+        "snapshot": {
+          "name": "Basmati rice",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "70168167-ff30-45df-83d3-7b6c594d2fd3",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Lunch",
+        "sourceId": "chicken-cooked",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Chicken breast",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "edf97358-cebb-4461-86ed-73e79a7b289c",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Lunch",
+        "sourceId": "broccoli",
+        "sourceType": "food",
+        "grams": 100,
+        "snapshot": {
+          "name": "Broccoli",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 35,
+            "protein": 2.4,
+            "carbs": 7.2,
+            "fat": 0.4
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "1ce9e906-9a49-46a9-80d2-277895c9d549",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Dinner",
+        "sourceId": "bread",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Wholegrain bread",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 247,
+            "protein": 13,
+            "carbs": 41,
+            "fat": 4.2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "a2abc4ec-4395-4612-a6a6-c5041cacda4f",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Dinner",
+        "sourceId": "eggs",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Whole egg",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 143,
+            "protein": 12.6,
+            "carbs": 0.7,
+            "fat": 9.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "21fb84d6-1183-48a1-8b3e-5b5a7a101e75",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Snacks",
+        "sourceId": "banana",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Banana",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 89,
+            "protein": 1.1,
+            "carbs": 22.8,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "8447a1ee-e968-479d-800d-b31f3e2257da",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-15",
+        "meal": "Snacks",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "c529d9c6-bb39-47c5-b0fa-10102b593da2",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Breakfast",
+        "sourceId": "oats",
+        "sourceType": "food",
+        "grams": 60,
+        "snapshot": {
+          "name": "Rolled oats",
+          "preparation": "dry",
+          "per100g": {
+            "calories": 379,
+            "protein": 13.2,
+            "carbs": 67.7,
+            "fat": 6.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "091aadce-1fad-4b8a-ae49-ac559aa9d7b1",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Breakfast",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 200,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "b3ea3cd1-1bf6-4cb8-84f3-c7197ee6c343",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Breakfast",
+        "sourceId": "berries",
+        "sourceType": "food",
+        "grams": 80,
+        "snapshot": {
+          "name": "Blueberries",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 57,
+            "protein": 0.7,
+            "carbs": 14.5,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "79840a42-cf2a-425a-bf63-358ac498ab5e",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Lunch",
+        "sourceId": "rice-cooked",
+        "sourceType": "food",
+        "grams": 175,
+        "snapshot": {
+          "name": "Basmati rice",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "6b09178d-2f21-4f9a-aee4-f7b0a48896d3",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Lunch",
+        "sourceId": "chicken-cooked",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Chicken breast",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "ce25ae91-1f66-4079-a569-b5063dc485dc",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Lunch",
+        "sourceId": "broccoli",
+        "sourceType": "food",
+        "grams": 100,
+        "snapshot": {
+          "name": "Broccoli",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 35,
+            "protein": 2.4,
+            "carbs": 7.2,
+            "fat": 0.4
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "8a7bfb8d-e51c-48ca-a39c-b184ad37f5eb",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Dinner",
+        "sourceId": "bread",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Wholegrain bread",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 247,
+            "protein": 13,
+            "carbs": 41,
+            "fat": 4.2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "5412a093-7880-49b2-bb85-01eb48db8719",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Dinner",
+        "sourceId": "eggs",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Whole egg",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 143,
+            "protein": 12.6,
+            "carbs": 0.7,
+            "fat": 9.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "55b7ff37-8234-4eca-8ed9-6e3404ca729b",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Snacks",
+        "sourceId": "banana",
+        "sourceType": "food",
+        "grams": 120,
+        "snapshot": {
+          "name": "Banana",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 89,
+            "protein": 1.1,
+            "carbs": 22.8,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "11eb338f-6bfd-4c8d-97a0-50d4fd57cabd",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-16",
+        "meal": "Snacks",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.503Z"
+      },
+      {
+        "id": "10638d33-4afa-4134-8681-e5341c28c14e",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-17",
+        "meal": "Breakfast",
+        "sourceId": "oats",
+        "sourceType": "food",
+        "grams": 60,
+        "snapshot": {
+          "name": "Rolled oats",
+          "preparation": "dry",
+          "per100g": {
+            "calories": 379,
+            "protein": 13.2,
+            "carbs": 67.7,
+            "fat": 6.5
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.504Z"
+      },
+      {
+        "id": "f9ef126f-c6db-44f6-b420-3270cbe55cd8",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-17",
+        "meal": "Breakfast",
+        "sourceId": "yogurt",
+        "sourceType": "food",
+        "grams": 200,
+        "snapshot": {
+          "name": "Greek yogurt · plain",
+          "preparation": "packaged",
+          "per100g": {
+            "calories": 73,
+            "protein": 10,
+            "carbs": 3.9,
+            "fat": 2
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.504Z"
+      },
+      {
+        "id": "381953a8-b22e-4506-9952-d214a288542e",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-17",
+        "meal": "Breakfast",
+        "sourceId": "berries",
+        "sourceType": "food",
+        "grams": 80,
+        "snapshot": {
+          "name": "Blueberries",
+          "preparation": "raw",
+          "per100g": {
+            "calories": 57,
+            "protein": 0.7,
+            "carbs": 14.5,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.504Z"
+      },
+      {
+        "id": "c34bb9c4-fff2-445a-9a81-aa9532435df8",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-17",
+        "meal": "Lunch",
+        "sourceId": "rice-cooked",
+        "sourceType": "food",
+        "grams": 180,
+        "snapshot": {
+          "name": "Basmati rice",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.504Z"
+      },
+      {
+        "id": "00bd7e26-1beb-42ab-a9c7-bc138b66e534",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-17",
+        "meal": "Lunch",
+        "sourceId": "chicken-cooked",
+        "sourceType": "food",
+        "grams": 150,
+        "snapshot": {
+          "name": "Chicken breast",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.504Z"
+      },
+      {
+        "id": "0e82db1f-f2f7-4a2b-be95-aded4a0a8f1b",
+        "ownerId": "local-demo-user",
+        "date": "2026-10-17",
+        "meal": "Lunch",
+        "sourceId": "broccoli",
+        "sourceType": "food",
+        "grams": 100,
+        "snapshot": {
+          "name": "Broccoli",
+          "preparation": "cooked",
+          "per100g": {
+            "calories": 35,
+            "protein": 2.4,
+            "carbs": 7.2,
+            "fat": 0.4
+          }
+        },
+        "createdAt": "2026-10-18T03:11:52.504Z"
+      }
+    ],
+    "favorites": ["yogurt", "rice-cooked", "chicken-cooked"]
+  }
+}

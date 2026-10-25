@@ -1,0 +1,22 @@
+{
+  "name": "form-infrastructure",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "synth": "cdk synth --no-lookups --strict",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test --test-isolation=none test/*.test.ts"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.273.0",
+    "constructs": "10.5.1",
+    "cdk-nag": "3.0.2"
+  },
+  "devDependencies": {
+    "aws-cdk": "2.1145.0",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "@types/node": "24.10.1"
+  }
+}

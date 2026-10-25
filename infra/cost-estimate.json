@@ -1,0 +1,65 @@
+[
+  {
+    "mau": 2,
+    "components": {
+      "httpApi": 0.008,
+      "lambda": 0.0149,
+      "dynamoWrites": 0.05,
+      "dynamoReads": 0.01,
+      "dynamoStorage": 0.053,
+      "pitr": 0.036,
+      "logs": 0.0085,
+      "emailAllowance": 0.0006,
+      "alarms": 1.5,
+      "cursorSecret": 0.405,
+      "staticS3": 0.0215,
+      "operationsAllowance": 0.01,
+      "bootstrapS3": 0.012,
+      "cloudFrontEligibleAllowance": 0
+    },
+    "eligibleCognitoAndCloudFront": 2.13,
+    "bothAllowancesAlreadyConsumed": 2.18
+  },
+  {
+    "mau": 100,
+    "components": {
+      "httpApi": 0.4,
+      "lambda": 0.7467,
+      "dynamoWrites": 2.5,
+      "dynamoReads": 0.5,
+      "dynamoStorage": 2.405,
+      "pitr": 1.604,
+      "logs": 0.424,
+      "emailAllowance": 0.032,
+      "alarms": 1.5,
+      "cursorSecret": 0.405,
+      "staticS3": 0.0227,
+      "operationsAllowance": 0.01,
+      "bootstrapS3": 0.012,
+      "cloudFrontEligibleAllowance": 0
+    },
+    "eligibleCognitoAndCloudFront": 10.56,
+    "bothAllowancesAlreadyConsumed": 13.14
+  },
+  {
+    "mau": 1000,
+    "components": {
+      "httpApi": 4.0,
+      "lambda": 7.4667,
+      "dynamoWrites": 25.0,
+      "dynamoReads": 5.0,
+      "dynamoStorage": 24.005,
+      "pitr": 16.004,
+      "logs": 4.24,
+      "emailAllowance": 0.32,
+      "alarms": 1.5,
+      "cursorSecret": 0.405,
+      "staticS3": 0.0335,
+      "operationsAllowance": 0.01,
+      "bootstrapS3": 0.012,
+      "cloudFrontEligibleAllowance": 0
+    },
+    "eligibleCognitoAndCloudFront": 88.0,
+    "bothAllowancesAlreadyConsumed": 113.8
+  }
+]

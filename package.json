@@ -1,0 +1,38 @@
+{
+  "name": "form-fitness-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0",
+    "build": "next build --webpack",
+    "start": "next start --hostname 0.0.0.0",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test --test-isolation=none lib/*.test.ts",
+    "test:e2e": "playwright test",
+    "format": "prettier --write app lib tests docs *.md *.json *.mjs playwright.config.ts",
+    "build:static": "FORM_STATIC_EXPORT=1 next build --webpack",
+    "test:e2e:cloud": "playwright test --config playwright.cloud.config.ts",
+    "contracts:check": "python3 backend/scripts/generate_typescript.py --check"
+  },
+  "dependencies": {
+    "lucide-react": "latest",
+    "next": "^16.4.3",
+    "react": "latest",
+    "react-dom": "latest",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "^16.4.3",
+    "prettier": "^3.9.9",
+    "tailwindcss": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}
