@@ -153,3 +153,15 @@ Follow-up checks: 57 frontend unit tests, lint, typecheck, production build and
 static export pass. The representative static-site/fake-BFF browser journey
 completed its functional assertions but fails the existing console assertion on
 the missing favicon 404. Live full-screen acceptance remains outstanding.
+
+## Cloud UI cleanup
+
+- Move account controls to Settings and contextual actions to Workouts, History and Recipes.
+- Replace technical header panels with one compact Saved/Saving/Unsaved indicator; retain error/recovery actions.
+- Remove raw account IDs and normal-state recovery prose; keep account-isolation checks in browser tests.
+- Add a FORM favicon and cover compact mobile/desktop layout plus account actions.
+
+Cleanup validation: 57 unit tests, 21 local browser tests and 17 cloud browser tests
+pass. Lint, typecheck, production build and static export pass. Mobile static-export
+screens were inspected for the header and Settings layout. No backend, infrastructure,
+IAM or application-data changes; frontend publication remains separate.

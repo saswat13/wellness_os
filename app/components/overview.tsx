@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   ArrowUpRight,
   Dumbbell,
@@ -224,7 +224,7 @@ export function Home({
       </section>
       <p className="text-xs leading-5 text-[#7b897a]">
         {cloud
-          ? "Cloud account · server records stay separate from this browser’s local prototype. Save status appears above."
+          ? "Your workouts and meals are saved to your account."
           : "Local prototype · one mock user · seeded workouts and nutrition values are mock data. Everything is saved in this browser."}
       </p>
     </div>
@@ -713,7 +713,14 @@ export function Settings({
   setStore,
   onUnit,
   cloud = false,
-}: NutritionProps & { cloud?: boolean; onUnit: (unit: "kg" | "lb") => void }) {
+  accountControls,
+  locked = false,
+}: NutritionProps & {
+  cloud?: boolean;
+  onUnit: (unit: "kg" | "lb") => void;
+  accountControls?: ReactNode;
+  locked?: boolean;
+}) {
   const [goals, setGoals] = useState<NutritionGoals>(
     structuredClone(store.goals),
   );
@@ -734,145 +741,150 @@ export function Settings({
           {message}
         </p>
       )}
-      <form
-        className={`${panel} space-y-4`}
-        onSubmit={(e) => {
-          e.preventDefault();
-          try {
-            setStore(saveGoals(store, goals));
-            setMessage(
-              "Nutrition goals saved. Dashboard and diary targets updated.",
-            );
-          } catch {
-            setMessage("Enter valid, non-negative targets.");
-          }
-        }}
-      >
-        <h2 className="text-xl font-bold">Nutrition Goals</h2>
-        <p className={muted}>
-          Your daily targets. Set values that suit your own plan.
-        </p>
-        <NutrientInputs
-          value={goals}
-          onChange={(n) => setGoals({ ...goals, ...n })}
-          prefix="Goal "
-        />
-        <div className="rounded-xl bg-[#f6f7f3] p-3">
-          <p className="text-sm font-semibold">
-            Macro-derived calories: {fmt(macroCalories(goals))} kcal
-          </p>
-          <p className={`mt-1 ${muted}`}>
-            Protein × 4 + carbohydrates × 4 + fat × 9
-          </p>
-        </div>
-        {goalsDiffer(goals) && (
-          <p
-            role="status"
-            className="rounded-xl bg-amber-50 p-3 text-sm text-amber-900"
-          >
-            Your macro targets imply {fmt(macroCalories(goals))} kcal, which
-            differs materially from your {fmt(goals.calories)} kcal target. You
-            can save these targets independently.
-          </p>
-        )}
-        <div className="flex gap-2">
-          <button className={primary}>
-            <Check size={16} />
-            Save goals
-          </button>
-          <button
-            className={action}
-            type="button"
-            onClick={() => {
-              setGoals(structuredClone(store.goals));
-              setMessage("Unsaved goal changes canceled.");
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-      <form
-        className={`${panel} space-y-4`}
-        onSubmit={(e) => {
-          e.preventDefault();
-          try {
-            setStore(saveUser(store, user));
-            onUnit(user.unit);
-            setMessage("Preferences saved.");
-          } catch {
-            setMessage("Check your name and time zone.");
-          }
-        }}
-      >
-        <h2 className="text-xl font-bold">Preferences</h2>
-        <label className="block text-sm">
-          Display name
-          <input
-            className={`${control} mt-1`}
-            required
-            maxLength={80}
-            value={user.name}
-            onChange={(e) => setUser({ ...user, name: e.target.value })}
-          />
-        </label>
-        <label className="block text-sm">
-          Preferred weight units
-          <select
-            className={`${control} mt-1`}
-            value={user.unit}
-            onChange={(e) =>
-              setUser({ ...user, unit: e.target.value as "kg" | "lb" })
+      {accountControls}
+      <fieldset className="min-w-0 space-y-5" disabled={locked}>
+        <form
+          className={`${panel} space-y-4`}
+          onSubmit={(e) => {
+            e.preventDefault();
+            try {
+              setStore(saveGoals(store, goals));
+              setMessage(
+                "Nutrition goals saved. Dashboard and diary targets updated.",
+              );
+            } catch {
+              setMessage("Enter valid, non-negative targets.");
             }
-          >
-            <option>kg</option>
-            <option>lb</option>
-          </select>
-        </label>
-        <label className="block text-sm">
-          Time zone
-          <select
-            className={`${control} mt-1`}
-            value={user.timeZone}
-            onChange={(e) => setUser({ ...user, timeZone: e.target.value })}
-          >
-            {Array.from(
-              new Set([
-                user.timeZone,
-                "America/Los_Angeles",
-                "America/New_York",
-                "Europe/London",
-                "Europe/Berlin",
-                "Asia/Kolkata",
-                "Asia/Singapore",
-                "Australia/Sydney",
-                "UTC",
-              ]),
-            ).map((z) => (
-              <option key={z}>{z}</option>
-            ))}
-          </select>
-        </label>
-        <p className="text-xs text-[#7b897a]">
-          Sets always store kilograms internally. Time zone controls Today in
-          the diary and dashboard.
-        </p>
-        <div className="flex gap-2">
-          <button className={primary}>Save preferences</button>
-          <button
-            type="button"
-            className={action}
-            onClick={() => {
-              setUser(structuredClone(store.user));
-              setMessage("Unsaved preference changes canceled.");
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
+          }}
+        >
+          <h2 className="text-xl font-bold">Nutrition Goals</h2>
+          <p className={muted}>
+            Your daily targets. Set values that suit your own plan.
+          </p>
+          <NutrientInputs
+            value={goals}
+            onChange={(n) => setGoals({ ...goals, ...n })}
+            prefix="Goal "
+          />
+          <div className="rounded-xl bg-[#f6f7f3] p-3">
+            <p className="text-sm font-semibold">
+              Macro-derived calories: {fmt(macroCalories(goals))} kcal
+            </p>
+            <p className={`mt-1 ${muted}`}>
+              Protein × 4 + carbohydrates × 4 + fat × 9
+            </p>
+          </div>
+          {goalsDiffer(goals) && (
+            <p
+              role="status"
+              className="rounded-xl bg-amber-50 p-3 text-sm text-amber-900"
+            >
+              Your macro targets imply {fmt(macroCalories(goals))} kcal, which
+              differs materially from your {fmt(goals.calories)} kcal target.
+              You can save these targets independently.
+            </p>
+          )}
+          <div className="flex gap-2">
+            <button className={primary}>
+              <Check size={16} />
+              Save goals
+            </button>
+            <button
+              className={action}
+              type="button"
+              onClick={() => {
+                setGoals(structuredClone(store.goals));
+                setMessage("Unsaved goal changes canceled.");
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+        <form
+          className={`${panel} space-y-4`}
+          onSubmit={(e) => {
+            e.preventDefault();
+            try {
+              setStore(saveUser(store, user));
+              onUnit(user.unit);
+              setMessage("Preferences saved.");
+            } catch {
+              setMessage("Check your name and time zone.");
+            }
+          }}
+        >
+          <h2 className="text-xl font-bold">Preferences</h2>
+          <label className="block text-sm">
+            Display name
+            <input
+              className={`${control} mt-1`}
+              required
+              maxLength={80}
+              value={user.name}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
+            />
+          </label>
+          <label className="block text-sm">
+            Preferred weight units
+            <select
+              className={`${control} mt-1`}
+              value={user.unit}
+              onChange={(e) =>
+                setUser({ ...user, unit: e.target.value as "kg" | "lb" })
+              }
+            >
+              <option>kg</option>
+              <option>lb</option>
+            </select>
+          </label>
+          <label className="block text-sm">
+            Time zone
+            <select
+              className={`${control} mt-1`}
+              value={user.timeZone}
+              onChange={(e) => setUser({ ...user, timeZone: e.target.value })}
+            >
+              {Array.from(
+                new Set([
+                  user.timeZone,
+                  "America/Los_Angeles",
+                  "America/New_York",
+                  "Europe/London",
+                  "Europe/Berlin",
+                  "Asia/Kolkata",
+                  "Asia/Singapore",
+                  "Australia/Sydney",
+                  "UTC",
+                ]),
+              ).map((z) => (
+                <option key={z}>{z}</option>
+              ))}
+            </select>
+          </label>
+          <p className="text-xs text-[#7b897a]">
+            Sets always store kilograms internally. Time zone controls Today in
+            the diary and dashboard.
+          </p>
+          <div className="flex gap-2">
+            <button className={primary}>Save preferences</button>
+            <button
+              type="button"
+              className={action}
+              onClick={() => {
+                setUser(structuredClone(store.user));
+                setMessage("Unsaved preference changes canceled.");
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </fieldset>
       <div className={panel}>
-        <h2 className="font-bold">About this prototype</h2>
+        <h2 className="font-bold">
+          {cloud ? "About FORM" : "About this prototype"}
+        </h2>
         <p className={`mt-2 leading-6 ${muted}`}>
           {cloud
             ? "Your signed-in account saves online. Local browser records stay separate. Public signup, public publishing and offline cloud synchronization are unavailable."

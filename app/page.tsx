@@ -357,9 +357,13 @@ function FormScreen({ cloud }: { cloud?: CloudBinding }) {
               A little stronger, every session.
             </span>
           </button>
-          <span className="rounded-full bg-[#f0f3ec] px-3 py-2 text-xs font-medium">
-            {cloud ? "CLOUD ACCOUNT" : "LOCAL PROTOTYPE"}
-          </span>
+          {cloud ? (
+            cloud.saveStatus
+          ) : (
+            <span className="rounded-full bg-[#f0f3ec] px-3 py-2 text-xs font-medium">
+              LOCAL PROTOTYPE
+            </span>
+          )}
         </div>
       </header>
       <main
@@ -404,598 +408,615 @@ function FormScreen({ cloud }: { cloud?: CloudBinding }) {
             </button>
           </div>
         )}
-        {section === "home" ? (
-          <Home
-            tracker={store}
-            nutrition={nutrition}
-            navigate={navigate}
-            cloud={!!cloud}
-          />
-        ) : section === "nutrition" ? (
-          <Nutrition
-            store={nutrition}
-            setStore={setNutrition}
-            quickLog={quickLog}
-            onGoals={() => navigate("settings")}
-            cloud={!!cloud}
-            onDateChange={cloud?.loadDay}
-            serverDay={cloud?.day}
-          />
-        ) : section === "progress" ? (
-          <Progress tracker={store} nutrition={nutrition} />
-        ) : section === "settings" ? (
-          <Settings
-            store={nutrition}
-            setStore={setNutrition}
-            cloud={!!cloud}
-            onUnit={(unit) => setSession((s) => ({ ...s, unit }))}
-          />
-        ) : (
-          <>
-            <nav
-              aria-label="FORM sections"
-              className="mb-5 flex gap-1 rounded-2xl border border-[#dfe5dc] bg-white p-1"
-            >
-              {(["workout", "library", "templates", "history"] as const).map(
-                (section) => (
-                  <button
-                    key={section}
-                    aria-current={view === section ? "page" : undefined}
-                    className={`${button} min-w-0 flex-1 px-2 text-xs sm:px-3 sm:text-sm ${view === section ? "bg-[#244b3c] text-white" : "text-[#6c7c6e]"}`}
-                    onClick={() => {
-                      navigate("workouts", section);
-                    }}
-                  >
-                    {section === "workout"
-                      ? "Workout"
-                      : section === "library"
-                        ? "Library"
-                        : section === "templates"
-                          ? "Templates"
-                          : "History"}
-                  </button>
-                ),
-              )}
-            </nav>
-            {view === "workout" && (
-              <div className="mb-5 flex items-center justify-between">
-                <span className="text-xs font-bold tracking-[.16em] text-[#728274]">
-                  TRAINING / {session.trainingType.toUpperCase()}
-                </span>
-                <label className="flex items-center gap-2 text-xs font-medium">
-                  Units
-                  <select
-                    aria-label="Weight units"
-                    value={session.unit}
-                    onChange={(e) => {
-                      const unit = e.target.value as Unit;
-                      setSession((s) => ({ ...s, unit }));
-                      setNutrition((n) => ({
-                        ...n,
-                        user: { ...n.user, unit },
-                      }));
-                    }}
-                    className="min-h-11 rounded-xl border border-[#d8dfd4] bg-white px-3"
-                  >
-                    <option>kg</option>
-                    <option>lb</option>
-                  </select>
-                </label>
-              </div>
-            )}
-            {view === "library" ? (
-              <>
-                {replacing && (
-                  <p className="mb-4 rounded-xl bg-[#edf1e7] p-3 text-sm">
-                    Choose the replacement exercise. Only this session changes.{" "}
+        {cloud?.saveNotice}
+        <fieldset
+          className="contents"
+          disabled={cloud?.locked && section !== "settings"}
+        >
+          {section === "home" ? (
+            <Home
+              tracker={store}
+              nutrition={nutrition}
+              navigate={navigate}
+              cloud={!!cloud}
+            />
+          ) : section === "nutrition" ? (
+            <Nutrition
+              store={nutrition}
+              setStore={setNutrition}
+              quickLog={quickLog}
+              onGoals={() => navigate("settings")}
+              cloud={!!cloud}
+              onDateChange={cloud?.loadDay}
+              serverDay={cloud?.day}
+              recipeHistory={cloud?.recipeHistory}
+            />
+          ) : section === "progress" ? (
+            <Progress tracker={store} nutrition={nutrition} />
+          ) : section === "settings" ? (
+            <Settings
+              accountControls={cloud?.accountControls}
+              locked={cloud?.locked}
+              store={nutrition}
+              setStore={setNutrition}
+              cloud={!!cloud}
+              onUnit={(unit) => setSession((s) => ({ ...s, unit }))}
+            />
+          ) : (
+            <>
+              <nav
+                aria-label="FORM sections"
+                className="mb-5 flex gap-1 rounded-2xl border border-[#dfe5dc] bg-white p-1"
+              >
+                {(["workout", "library", "templates", "history"] as const).map(
+                  (section) => (
                     <button
-                      className={button}
+                      key={section}
+                      aria-current={view === section ? "page" : undefined}
+                      className={`${button} min-w-0 flex-1 px-2 text-xs sm:px-3 sm:text-sm ${view === section ? "bg-[#244b3c] text-white" : "text-[#6c7c6e]"}`}
                       onClick={() => {
-                        setReplacing(null);
-                        navigate("workouts", "workout");
+                        navigate("workouts", section);
                       }}
                     >
-                      Cancel replacement
+                      {section === "workout"
+                        ? "Workout"
+                        : section === "library"
+                          ? "Library"
+                          : section === "templates"
+                            ? "Templates"
+                            : "History"}
                     </button>
-                  </p>
+                  ),
                 )}
-                <ExerciseLibrary
+              </nav>
+              {view === "workout" && cloud?.workoutControls}
+              {view === "history" && cloud?.historyControls}
+              {view === "workout" && (
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-xs font-bold tracking-[.16em] text-[#728274]">
+                    TRAINING / {session.trainingType.toUpperCase()}
+                  </span>
+                  <label className="flex items-center gap-2 text-xs font-medium">
+                    Units
+                    <select
+                      aria-label="Weight units"
+                      value={session.unit}
+                      onChange={(e) => {
+                        const unit = e.target.value as Unit;
+                        setSession((s) => ({ ...s, unit }));
+                        setNutrition((n) => ({
+                          ...n,
+                          user: { ...n.user, unit },
+                        }));
+                      }}
+                      className="min-h-11 rounded-xl border border-[#d8dfd4] bg-white px-3"
+                    >
+                      <option>kg</option>
+                      <option>lb</option>
+                    </select>
+                  </label>
+                </div>
+              )}
+              {view === "library" ? (
+                <>
+                  {replacing && (
+                    <p className="mb-4 rounded-xl bg-[#edf1e7] p-3 text-sm">
+                      Choose the replacement exercise. Only this session
+                      changes.{" "}
+                      <button
+                        className={button}
+                        onClick={() => {
+                          setReplacing(null);
+                          navigate("workouts", "workout");
+                        }}
+                      >
+                        Cancel replacement
+                      </button>
+                    </p>
+                  )}
+                  <ExerciseLibrary
+                    timeZone={nutrition.user.timeZone}
+                    store={store}
+                    setStore={setStore}
+                    onAdd={
+                      replacing
+                        ? (exercise) => {
+                            setStore(
+                              replaceInSession(store, replacing, exercise.id),
+                            );
+                            setReplacing(null);
+                            navigate("workouts", "workout");
+                          }
+                        : undefined
+                    }
+                  />
+                </>
+              ) : view === "templates" ? (
+                <Templates
                   timeZone={nutrition.user.timeZone}
                   store={store}
                   setStore={setStore}
-                  onAdd={
-                    replacing
-                      ? (exercise) => {
-                          setStore(
-                            replaceInSession(store, replacing, exercise.id),
-                          );
-                          setReplacing(null);
-                          navigate("workouts", "workout");
-                        }
-                      : undefined
-                  }
+                  onStart={() => {
+                    navigate("workouts", "workout");
+                    setDeadline(null);
+                    setCollapsed([]);
+                  }}
                 />
-              </>
-            ) : view === "templates" ? (
-              <Templates
-                timeZone={nutrition.user.timeZone}
-                store={store}
-                setStore={setStore}
-                onStart={() => {
-                  navigate("workouts", "workout");
-                  setDeadline(null);
-                  setCollapsed([]);
-                }}
-              />
-            ) : view === "history" ? (
-              <WorkoutArchive
-                key={historySession ?? "archive"}
-                initialSession={historySession}
-                onSelect={(id) =>
-                  navigate("workouts", id ? `history:${id}` : "history")
-                }
-                tracker={store}
-                timeZone={nutrition.user.timeZone}
-              />
-            ) : session.finished ? (
-              <>
-                <div className="rounded-3xl bg-[#244b3c] p-7 text-white">
-                  <Check
-                    className="mb-5 rounded-full bg-[#d6ecb4] p-2 text-[#244b3c]"
-                    size={48}
-                  />
-                  <p className="text-xs font-bold tracking-widest text-[#d6ecb4]">
-                    SESSION COMPLETE
-                  </p>
-                  <h1 className="mt-3 text-4xl font-bold tracking-tight">
-                    Work put in.
-                  </h1>
-                  <p className="mt-3 text-[#d7e0d7]">
-                    {session.name} ·{" "}
-                    {cloud
-                      ? "Cloud save status is shown above."
-                      : "Your session is saved in this browser."}
-                  </p>
-                  <div className="mt-7 grid grid-cols-3 gap-3">
-                    <Stat
-                      value={String(
-                        exercises.filter((e) =>
-                          session.logs[e.id].some((s) => s.done),
-                        ).length,
-                      )}
-                      label="Exercises"
+              ) : view === "history" ? (
+                <WorkoutArchive
+                  key={historySession ?? "archive"}
+                  initialSession={historySession}
+                  onSelect={(id) =>
+                    navigate("workouts", id ? `history:${id}` : "history")
+                  }
+                  tracker={store}
+                  timeZone={nutrition.user.timeZone}
+                />
+              ) : session.finished ? (
+                <>
+                  <div className="rounded-3xl bg-[#244b3c] p-7 text-white">
+                    <Check
+                      className="mb-5 rounded-full bg-[#d6ecb4] p-2 text-[#244b3c]"
+                      size={48}
                     />
-                    <Stat value={String(completed)} label="Completed sets" />
+                    <p className="text-xs font-bold tracking-widest text-[#d6ecb4]">
+                      SESSION COMPLETE
+                    </p>
+                    <h1 className="mt-3 text-4xl font-bold tracking-tight">
+                      Work put in.
+                    </h1>
+                    <p className="mt-3 text-[#d7e0d7]">
+                      {session.name} ·{" "}
+                      {cloud
+                        ? "Cloud save status is shown above."
+                        : "Your session is saved in this browser."}
+                    </p>
+                    <div className="mt-7 grid grid-cols-3 gap-3">
+                      <Stat
+                        value={String(
+                          exercises.filter((e) =>
+                            session.logs[e.id].some((s) => s.done),
+                          ).length,
+                        )}
+                        label="Exercises"
+                      />
+                      <Stat value={String(completed)} label="Completed sets" />
+                      <Stat
+                        value={totalVolume.toLocaleString()}
+                        label={`${session.unit} · reps`}
+                      />
+                    </div>
+                  </div>
+                  <h2 className="mb-3 mt-7 text-lg font-bold">
+                    Your session breakdown
+                  </h2>
+                  {exercises.map((e) => (
+                    <div
+                      key={e.id}
+                      className="mb-3 rounded-2xl border border-[#dfe5dc] bg-white p-5"
+                    >
+                      <h3 className="font-semibold">{e.name}</h3>
+                      <p className="mt-2 text-sm text-[#677669]">
+                        {setCounts(session.logs[e.id]).completed} completed{" "}
+                        {e.unilateral
+                          ? setCounts(session.logs[e.id]).completed === 1
+                            ? "pair"
+                            : "pairs"
+                          : setCounts(session.logs[e.id]).completed === 1
+                            ? "set"
+                            : "sets"}
+                        {setCounts(session.logs[e.id]).partial
+                          ? ` · ${setCounts(session.logs[e.id]).partial} partial ${setCounts(session.logs[e.id]).partial === 1 ? "pair" : "pairs"}`
+                          : ""}{" "}
+                        ·{" "}
+                        {displayLoad(
+                          volume(session.logs[e.id]),
+                          session.unit,
+                        ).toLocaleString()}{" "}
+                        {session.unit} · reps
+                      </p>
+                      <p className="mt-2 text-sm">
+                        {session.logs[e.id]
+                          .filter((s) => s.done)
+                          .map(
+                            (s) =>
+                              `${s.side === "both" ? "" : s.side + ": "}${s.reps} × ${displayLoad(s.kg, session.unit)} ${session.unit}`,
+                          )
+                          .join(" / ") || "No sets completed"}
+                      </p>
+                      {e.unilateral && (
+                        <SideComparison
+                          sets={session.logs[e.id]}
+                          unit={session.unit}
+                        />
+                      )}
+                    </div>
+                  ))}
+                  <p className="my-4 text-xs text-[#677669]">
+                    Volume is logged load × reps for completed entries. Each
+                    unilateral side contributes volume; paired sets count once;
+                    cable load conventions are noted per exercise.
+                  </p>
+                  {session.notes && (
+                    <div className="rounded-2xl bg-white p-5">
+                      <h2 className="font-semibold">Workout notes</h2>
+                      <p className="mt-2 whitespace-pre-wrap text-sm">
+                        {session.notes}
+                      </p>
+                    </div>
+                  )}
+                  <button
+                    className={`${button} mt-5 bg-[#244b3c] text-white`}
+                    onClick={() =>
+                      setSession((s) => ({ ...s, finished: false }))
+                    }
+                  >
+                    <ChevronLeft size={16} />
+                    Back to workout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+                    {session.name}
+                    <span className="text-[#87a472]">.</span>
+                  </h1>
+                  <p className="mt-3 text-sm text-[#6c7c6e]">
+                    Build with intention. Log one set at a time.
+                  </p>
+                  <div className="mt-6 grid grid-cols-3 divide-x divide-[#dce3d5] rounded-2xl border border-[#dce3d5] bg-[#edf1e7] py-4">
+                    <Stat value={String(exercises.length)} label="Exercises" />
+                    <Stat
+                      value={`${completed}/${counts.total}`}
+                      label="Sets complete"
+                    />
                     <Stat
                       value={totalVolume.toLocaleString()}
-                      label={`${session.unit} · reps`}
+                      label={`Volume · ${session.unit} × reps`}
                     />
                   </div>
-                </div>
-                <h2 className="mb-3 mt-7 text-lg font-bold">
-                  Your session breakdown
-                </h2>
-                {exercises.map((e) => (
-                  <div
-                    key={e.id}
-                    className="mb-3 rounded-2xl border border-[#dfe5dc] bg-white p-5"
-                  >
-                    <h3 className="font-semibold">{e.name}</h3>
-                    <p className="mt-2 text-sm text-[#677669]">
-                      {setCounts(session.logs[e.id]).completed} completed{" "}
-                      {e.unilateral
-                        ? setCounts(session.logs[e.id]).completed === 1
-                          ? "pair"
-                          : "pairs"
-                        : setCounts(session.logs[e.id]).completed === 1
-                          ? "set"
-                          : "sets"}
-                      {setCounts(session.logs[e.id]).partial
-                        ? ` · ${setCounts(session.logs[e.id]).partial} partial ${setCounts(session.logs[e.id]).partial === 1 ? "pair" : "pairs"}`
-                        : ""}{" "}
-                      ·{" "}
-                      {displayLoad(
-                        volume(session.logs[e.id]),
-                        session.unit,
-                      ).toLocaleString()}{" "}
-                      {session.unit} · reps
+                  {counts.partial > 0 && (
+                    <p role="status" className="mt-3 text-xs text-[#6c7c6e]">
+                      {counts.partial} partially completed{" "}
+                      {counts.partial === 1 ? "pair" : "pairs"} · completed
+                      sides count toward volume.
                     </p>
-                    <p className="mt-2 text-sm">
-                      {session.logs[e.id]
-                        .filter((s) => s.done)
-                        .map(
-                          (s) =>
-                            `${s.side === "both" ? "" : s.side + ": "}${s.reps} × ${displayLoad(s.kg, session.unit)} ${session.unit}`,
-                        )
-                        .join(" / ") || "No sets completed"}
-                    </p>
-                    {e.unilateral && (
-                      <SideComparison
-                        sets={session.logs[e.id]}
-                        unit={session.unit}
+                  )}
+                  <div className="mb-5 mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-[#6c7c6e]">
+                    <span className="flex items-center gap-2">
+                      <History size={14} />
+                      Prefilled from previous results where available
+                      {!cloud && " · mock samples"}
+                    </span>
+                    <label className="flex min-h-11 cursor-pointer items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={showRpe}
+                        onChange={(e) => setShowRpe(e.target.checked)}
+                        className="h-4 w-4 accent-[#244b3c]"
                       />
-                    )}
+                      Show optional RPE
+                    </label>
                   </div>
-                ))}
-                <p className="my-4 text-xs text-[#677669]">
-                  Volume is logged load × reps for completed entries. Each
-                  unilateral side contributes volume; paired sets count once;
-                  cable load conventions are noted per exercise.
-                </p>
-                {session.notes && (
-                  <div className="rounded-2xl bg-white p-5">
-                    <h2 className="font-semibold">Workout notes</h2>
-                    <p className="mt-2 whitespace-pre-wrap text-sm">
-                      {session.notes}
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    <button
+                      className={`${button} bg-white border border-[#dfe5dc]`}
+                      onClick={() => navigate("workouts", "library")}
+                    >
+                      <Plus size={16} />
+                      Add exercise
+                    </button>
+                    <button
+                      className={`${button} text-[#57775d]`}
+                      onClick={() => navigate("workouts", "templates")}
+                    >
+                      Manage templates
+                    </button>
+                  </div>
+                  <details className="mb-4 rounded-2xl border border-[#dfe5dc] bg-white p-4">
+                    <summary className="min-h-11 cursor-pointer text-sm font-semibold">
+                      Edit this workout only
+                    </summary>
+                    <label className="mt-2 block text-sm">
+                      Workout name
+                      <input
+                        aria-label="Current workout name"
+                        maxLength={120}
+                        className="mt-1 min-h-11 w-full rounded-xl border border-[#dfe5dc] p-3"
+                        value={session.name}
+                        onChange={(event) =>
+                          setSession((s) => ({
+                            ...s,
+                            name: event.target.value.trim()
+                              ? event.target.value
+                              : "Untitled workout",
+                          }))
+                        }
+                      />
+                    </label>
+                    <p className="mt-2 text-xs text-[#7b897a]">
+                      Session changes never update the reusable template. Use
+                      Templates to edit a reusable plan or save a new copy.
                     </p>
-                  </div>
-                )}
-                <button
-                  className={`${button} mt-5 bg-[#244b3c] text-white`}
-                  onClick={() => setSession((s) => ({ ...s, finished: false }))}
-                >
-                  <ChevronLeft size={16} />
-                  Back to workout
-                </button>
-              </>
-            ) : (
-              <>
-                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                  {session.name}
-                  <span className="text-[#87a472]">.</span>
-                </h1>
-                <p className="mt-3 text-sm text-[#6c7c6e]">
-                  Build with intention. Log one set at a time.
-                </p>
-                <div className="mt-6 grid grid-cols-3 divide-x divide-[#dce3d5] rounded-2xl border border-[#dce3d5] bg-[#edf1e7] py-4">
-                  <Stat value={String(exercises.length)} label="Exercises" />
-                  <Stat
-                    value={`${completed}/${counts.total}`}
-                    label="Sets complete"
-                  />
-                  <Stat
-                    value={totalVolume.toLocaleString()}
-                    label={`Volume · ${session.unit} × reps`}
-                  />
-                </div>
-                {counts.partial > 0 && (
-                  <p role="status" className="mt-3 text-xs text-[#6c7c6e]">
-                    {counts.partial} partially completed{" "}
-                    {counts.partial === 1 ? "pair" : "pairs"} · completed sides
-                    count toward volume.
-                  </p>
-                )}
-                <div className="mb-5 mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-[#6c7c6e]">
-                  <span className="flex items-center gap-2">
-                    <History size={14} />
-                    Prefilled from previous results where available · mock
-                    samples
-                  </span>
-                  <label className="flex min-h-11 cursor-pointer items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={showRpe}
-                      onChange={(e) => setShowRpe(e.target.checked)}
-                      className="h-4 w-4 accent-[#244b3c]"
-                    />
-                    Show optional RPE
-                  </label>
-                </div>
-                <div className="mb-4 flex flex-wrap gap-2">
-                  <button
-                    className={`${button} bg-white border border-[#dfe5dc]`}
-                    onClick={() => navigate("workouts", "library")}
-                  >
-                    <Plus size={16} />
-                    Add exercise
-                  </button>
-                  <button
-                    className={`${button} text-[#57775d]`}
-                    onClick={() => navigate("workouts", "templates")}
-                  >
-                    Manage templates
-                  </button>
-                </div>
-                <details className="mb-4 rounded-2xl border border-[#dfe5dc] bg-white p-4">
-                  <summary className="min-h-11 cursor-pointer text-sm font-semibold">
-                    Edit this workout only
-                  </summary>
-                  <label className="mt-2 block text-sm">
-                    Workout name
-                    <input
-                      aria-label="Current workout name"
-                      maxLength={120}
-                      className="mt-1 min-h-11 w-full rounded-xl border border-[#dfe5dc] p-3"
-                      value={session.name}
-                      onChange={(event) =>
-                        setSession((s) => ({
-                          ...s,
-                          name: event.target.value.trim()
-                            ? event.target.value
-                            : "Untitled workout",
-                        }))
-                      }
-                    />
-                  </label>
-                  <p className="mt-2 text-xs text-[#7b897a]">
-                    Session changes never update the reusable template. Use
-                    Templates to edit a reusable plan or save a new copy.
-                  </p>
-                </details>
-                {!exercises.length && (
-                  <p className="mb-4 rounded-2xl bg-white p-5 text-sm">
-                    This workout is empty. Add any exercise from your library.
-                  </p>
-                )}
-                <div className="space-y-4">
-                  {exercises.map((e, index) => {
-                    const sets = session.logs[e.id];
-                    const isCollapsed = collapsed.includes(e.id);
-                    const exerciseCounts = setCounts(sets);
-                    const count = exerciseCounts.completed;
-                    return (
-                      <section
-                        key={e.id}
-                        className="overflow-hidden rounded-2xl border border-[#dfe5dc] bg-white shadow-[0_3px_12px_#18352c03]"
-                      >
-                        <button
-                          aria-expanded={!isCollapsed}
-                          aria-controls={`${e.id}-content`}
-                          onClick={() =>
-                            setCollapsed((c) =>
-                              isCollapsed
-                                ? c.filter((id) => id !== e.id)
-                                : [...c, e.id],
-                            )
-                          }
-                          className="flex min-h-20 w-full items-center gap-3 p-4 text-left sm:p-5"
+                  </details>
+                  {!exercises.length && (
+                    <p className="mb-4 rounded-2xl bg-white p-5 text-sm">
+                      This workout is empty. Add any exercise from your library.
+                    </p>
+                  )}
+                  <div className="space-y-4">
+                    {exercises.map((e, index) => {
+                      const sets = session.logs[e.id];
+                      const isCollapsed = collapsed.includes(e.id);
+                      const exerciseCounts = setCounts(sets);
+                      const count = exerciseCounts.completed;
+                      return (
+                        <section
+                          key={e.id}
+                          className="overflow-hidden rounded-2xl border border-[#dfe5dc] bg-white shadow-[0_3px_12px_#18352c03]"
                         >
-                          <span
-                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ${count === exerciseCounts.total && count > 0 ? "bg-[#d6ecb4]" : "bg-[#f1f4ed]"}`}
+                          <button
+                            aria-expanded={!isCollapsed}
+                            aria-controls={`${e.id}-content`}
+                            onClick={() =>
+                              setCollapsed((c) =>
+                                isCollapsed
+                                  ? c.filter((id) => id !== e.id)
+                                  : [...c, e.id],
+                              )
+                            }
+                            className="flex min-h-20 w-full items-center gap-3 p-4 text-left sm:p-5"
                           >
-                            {count === exerciseCounts.total && count > 0 ? (
-                              <Check size={19} />
-                            ) : (
-                              String(index + 1).padStart(2, "0")
-                            )}
-                          </span>
-                          <span className="flex-1">
-                            <span className="mb-1 block text-[10px] font-bold tracking-widest text-[#7b897a]">
-                              {e.equipment}
+                            <span
+                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ${count === exerciseCounts.total && count > 0 ? "bg-[#d6ecb4]" : "bg-[#f1f4ed]"}`}
+                            >
+                              {count === exerciseCounts.total && count > 0 ? (
+                                <Check size={19} />
+                              ) : (
+                                String(index + 1).padStart(2, "0")
+                              )}
                             </span>
-                            <span className="block text-base font-bold sm:text-lg">
-                              {e.name}
-                            </span>
-                          </span>
-                          <span className="text-xs text-[#7b897a]">
-                            {count}/{exerciseCounts.total}
-                            {exerciseCounts.partial ? " · partial" : ""}
-                          </span>
-                          <ChevronDown
-                            size={18}
-                            className={isCollapsed ? "-rotate-90" : ""}
-                          />
-                        </button>
-                        {!isCollapsed && (
-                          <details className="mx-4 mb-3 rounded-xl bg-[#f6f7f3] px-3 sm:mx-5">
-                            <summary className="min-h-11 cursor-pointer py-3 text-xs font-semibold text-[#57775d]">
-                              Edit exercise in this session
-                            </summary>
-                            <div className="flex flex-wrap gap-1">
-                              <button
-                                className={`${button} disabled:opacity-30`}
-                                disabled={index === 0}
-                                aria-label={`Move ${e.name} up in session`}
-                                onClick={() =>
-                                  setSession((s) => ({
-                                    ...s,
-                                    exercises: move(s.exercises, e.id, -1),
-                                  }))
-                                }
-                              >
-                                Move up
-                              </button>
-                              <button
-                                className={`${button} disabled:opacity-30`}
-                                disabled={index === exercises.length - 1}
-                                aria-label={`Move ${e.name} down in session`}
-                                onClick={() =>
-                                  setSession((s) => ({
-                                    ...s,
-                                    exercises: move(s.exercises, e.id, 1),
-                                  }))
-                                }
-                              >
-                                Move down
-                              </button>
-                              <button
-                                className={button}
-                                aria-label={`Replace ${e.name} in session`}
-                                onClick={() => {
-                                  if (
-                                    !sets.some((s) => s.done) ||
-                                    window.confirm(
-                                      `Replace ${e.name} and its sets in this current workout? Completed history is preserved.`,
-                                    )
-                                  ) {
-                                    navigate("workouts", "library");
-                                    setReplacing(e.id);
-                                    window.scrollTo(0, 0);
-                                  }
-                                }}
-                              >
-                                Replace exercise
-                              </button>
-                              <button
-                                className={button}
-                                aria-label={`Remove ${e.name} from session`}
-                                onClick={() => {
-                                  if (
-                                    !sets.some((s) => s.done) ||
-                                    window.confirm(
-                                      `Remove ${e.name} and its logged sets from this workout only? Historical sessions are kept.`,
-                                    )
-                                  )
-                                    setStore((s) => removeFromSession(s, e.id));
-                                }}
-                              >
-                                Remove exercise
-                              </button>
-                            </div>
-                            <PrescriptionFields
-                              value={
-                                session.exercises.find(
-                                  (entry) => entry.id === e.id,
-                                )!.prescription
-                              }
-                              onChange={(prescription) =>
-                                setSession((s) => ({
-                                  ...s,
-                                  exercises: s.exercises.map((entry) =>
-                                    entry.id === e.id
-                                      ? {
-                                          ...entry,
-                                          prescription: {
-                                            ...prescription,
-                                            target:
-                                              prescription.target.trim() ||
-                                              "8–12",
-                                          },
-                                        }
-                                      : entry,
-                                  ),
-                                }))
-                              }
-                            />
-                            <p className="my-3 text-xs text-[#7b897a]">
-                              Plan changes do not change your actual logged
-                              sets. Add or remove actual sets below.
-                            </p>
-                          </details>
-                        )}
-                        {!isCollapsed && (
-                          <div
-                            id={`${e.id}-content`}
-                            className="px-4 pb-5 sm:px-5"
-                          >
-                            <div className="mb-4 flex flex-wrap items-center gap-2">
-                              <span className="rounded-lg bg-[#edf2e6] px-3 py-2 text-xs font-semibold">
-                                PLAN · {e.plannedSets}{" "}
-                                {e.unilateral ? "paired sets" : "sets"} ×{" "}
-                                {e.target} reps
+                            <span className="flex-1">
+                              <span className="mb-1 block text-[10px] font-bold tracking-widest text-[#7b897a]">
+                                {e.equipment}
                               </span>
-                              <a
-                                className={`${button} ml-auto text-[#57775d]`}
-                                href={
-                                  e.demoUrl ||
-                                  `https://www.youtube.com/results?search_query=${encodeURIComponent(e.name + " technique")}`
-                                }
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                Find a demo
-                                <ArrowUpRight size={15} />
-                              </a>
-                            </div>
-                            <p className="mb-4 border-l-2 border-[#c8dcb2] pl-3 text-sm leading-relaxed text-[#6a786c]">
-                              {e.note}
-                            </p>
-                            <div className="mb-4 rounded-xl bg-[#f6f7f3] p-3">
-                              <div className="flex items-center justify-between">
-                                <span className="text-[10px] font-bold tracking-widest text-[#778474]">
-                                  {e.history[0]
-                                    ? `PREVIOUS · ${new Date(e.history[0].date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase()}${e.history[0].mock ? " · MOCK" : ""}`
-                                    : "NO PREVIOUS WORKOUT"}
-                                </span>
+                              <span className="block text-base font-bold sm:text-lg">
+                                {e.name}
+                              </span>
+                            </span>
+                            <span className="text-xs text-[#7b897a]">
+                              {count}/{exerciseCounts.total}
+                              {exerciseCounts.partial ? " · partial" : ""}
+                            </span>
+                            <ChevronDown
+                              size={18}
+                              className={isCollapsed ? "-rotate-90" : ""}
+                            />
+                          </button>
+                          {!isCollapsed && (
+                            <details className="mx-4 mb-3 rounded-xl bg-[#f6f7f3] px-3 sm:mx-5">
+                              <summary className="min-h-11 cursor-pointer py-3 text-xs font-semibold text-[#57775d]">
+                                Edit exercise in this session
+                              </summary>
+                              <div className="flex flex-wrap gap-1">
                                 <button
-                                  className={`${button} -my-2 text-[#355f47]`}
+                                  className={`${button} disabled:opacity-30`}
+                                  disabled={index === 0}
+                                  aria-label={`Move ${e.name} up in session`}
+                                  onClick={() =>
+                                    setSession((s) => ({
+                                      ...s,
+                                      exercises: move(s.exercises, e.id, -1),
+                                    }))
+                                  }
+                                >
+                                  Move up
+                                </button>
+                                <button
+                                  className={`${button} disabled:opacity-30`}
+                                  disabled={index === exercises.length - 1}
+                                  aria-label={`Move ${e.name} down in session`}
+                                  onClick={() =>
+                                    setSession((s) => ({
+                                      ...s,
+                                      exercises: move(s.exercises, e.id, 1),
+                                    }))
+                                  }
+                                >
+                                  Move down
+                                </button>
+                                <button
+                                  className={button}
+                                  aria-label={`Replace ${e.name} in session`}
                                   onClick={() => {
-                                    setHistoryId(e.id);
-                                    if (cloud)
-                                      void cloud.loadHistory(e.exerciseId);
+                                    if (
+                                      !sets.some((s) => s.done) ||
+                                      window.confirm(
+                                        `Replace ${e.name} and its sets in this current workout? Completed history is preserved.`,
+                                      )
+                                    ) {
+                                      navigate("workouts", "library");
+                                      setReplacing(e.id);
+                                      window.scrollTo(0, 0);
+                                    }
                                   }}
                                 >
-                                  <History size={14} />
-                                  History
+                                  Replace exercise
+                                </button>
+                                <button
+                                  className={button}
+                                  aria-label={`Remove ${e.name} from session`}
+                                  onClick={() => {
+                                    if (
+                                      !sets.some((s) => s.done) ||
+                                      window.confirm(
+                                        `Remove ${e.name} and its logged sets from this workout only? Historical sessions are kept.`,
+                                      )
+                                    )
+                                      setStore((s) =>
+                                        removeFromSession(s, e.id),
+                                      );
+                                  }}
+                                >
+                                  Remove exercise
                                 </button>
                               </div>
-                              <p className="mt-2 text-xs leading-6 text-[#566954]">
-                                {e.history[0]?.sets.map((s, i) => (
-                                  <span key={i} className="mr-3 inline-block">
-                                    {s.side !== "both" && <b>{s.side} </b>}
-                                    {s.reps} × {displayLoad(s.kg, session.unit)}{" "}
-                                    {session.unit}
-                                    {!s.done && " (not completed)"}
-                                  </span>
-                                ))}
+                              <PrescriptionFields
+                                value={
+                                  session.exercises.find(
+                                    (entry) => entry.id === e.id,
+                                  )!.prescription
+                                }
+                                onChange={(prescription) =>
+                                  setSession((s) => ({
+                                    ...s,
+                                    exercises: s.exercises.map((entry) =>
+                                      entry.id === e.id
+                                        ? {
+                                            ...entry,
+                                            prescription: {
+                                              ...prescription,
+                                              target:
+                                                prescription.target.trim() ||
+                                                "8–12",
+                                            },
+                                          }
+                                        : entry,
+                                    ),
+                                  }))
+                                }
+                              />
+                              <p className="my-3 text-xs text-[#7b897a]">
+                                Plan changes do not change your actual logged
+                                sets. Add or remove actual sets below.
                               </p>
+                            </details>
+                          )}
+                          {!isCollapsed && (
+                            <div
+                              id={`${e.id}-content`}
+                              className="px-4 pb-5 sm:px-5"
+                            >
+                              <div className="mb-4 flex flex-wrap items-center gap-2">
+                                <span className="rounded-lg bg-[#edf2e6] px-3 py-2 text-xs font-semibold">
+                                  PLAN · {e.plannedSets}{" "}
+                                  {e.unilateral ? "paired sets" : "sets"} ×{" "}
+                                  {e.target} reps
+                                </span>
+                                <a
+                                  className={`${button} ml-auto text-[#57775d]`}
+                                  href={
+                                    e.demoUrl ||
+                                    `https://www.youtube.com/results?search_query=${encodeURIComponent(e.name + " technique")}`
+                                  }
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  Find a demo
+                                  <ArrowUpRight size={15} />
+                                </a>
+                              </div>
+                              <p className="mb-4 border-l-2 border-[#c8dcb2] pl-3 text-sm leading-relaxed text-[#6a786c]">
+                                {e.note}
+                              </p>
+                              <div className="mb-4 rounded-xl bg-[#f6f7f3] p-3">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[10px] font-bold tracking-widest text-[#778474]">
+                                    {e.history[0]
+                                      ? `PREVIOUS · ${new Date(e.history[0].date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase()}${e.history[0].mock ? " · MOCK" : ""}`
+                                      : "NO PREVIOUS WORKOUT"}
+                                  </span>
+                                  <button
+                                    className={`${button} -my-2 text-[#355f47]`}
+                                    onClick={() => {
+                                      setHistoryId(e.id);
+                                      if (cloud)
+                                        void cloud.loadHistory(e.exerciseId);
+                                    }}
+                                  >
+                                    <History size={14} />
+                                    History
+                                  </button>
+                                </div>
+                                <p className="mt-2 text-xs leading-6 text-[#566954]">
+                                  {e.history[0]?.sets.map((s, i) => (
+                                    <span key={i} className="mr-3 inline-block">
+                                      {s.side !== "both" && <b>{s.side} </b>}
+                                      {s.reps} ×{" "}
+                                      {displayLoad(s.kg, session.unit)}{" "}
+                                      {session.unit}
+                                      {!s.done && " (not completed)"}
+                                    </span>
+                                  ))}
+                                </p>
+                              </div>
+                              <SetLogger
+                                entry={session.exercises.find(
+                                  (entry) => entry.id === e.id,
+                                )!}
+                                sets={sets}
+                                unit={session.unit}
+                                showRpe={showRpe}
+                                onEdit={(id, patch) => update(e.id, id, patch)}
+                                onSharedWeight={(sameWeight) =>
+                                  setSession((s) => ({
+                                    ...s,
+                                    exercises: s.exercises.map((entry) =>
+                                      entry.id === e.id
+                                        ? { ...entry, sameWeight }
+                                        : entry,
+                                    ),
+                                  }))
+                                }
+                                onAdd={() =>
+                                  setSession((s) => appendSet(s, e.id))
+                                }
+                                onRemove={(groupId) =>
+                                  setSession((s) =>
+                                    removeSetGroup(s, e.id, groupId),
+                                  )
+                                }
+                                onRest={startTimer}
+                              />
                             </div>
-                            <SetLogger
-                              entry={session.exercises.find(
-                                (entry) => entry.id === e.id,
-                              )!}
-                              sets={sets}
-                              unit={session.unit}
-                              showRpe={showRpe}
-                              onEdit={(id, patch) => update(e.id, id, patch)}
-                              onSharedWeight={(sameWeight) =>
-                                setSession((s) => ({
-                                  ...s,
-                                  exercises: s.exercises.map((entry) =>
-                                    entry.id === e.id
-                                      ? { ...entry, sameWeight }
-                                      : entry,
-                                  ),
-                                }))
-                              }
-                              onAdd={() =>
-                                setSession((s) => appendSet(s, e.id))
-                              }
-                              onRemove={(groupId) =>
-                                setSession((s) =>
-                                  removeSetGroup(s, e.id, groupId),
-                                )
-                              }
-                              onRest={startTimer}
-                            />
-                          </div>
-                        )}
-                      </section>
-                    );
-                  })}
-                </div>
-                <section className="mt-6 rounded-2xl border border-[#dfe5dc] bg-white p-5">
-                  <label htmlFor="notes" className="font-bold">
-                    How did it feel?
-                    <span className="ml-2 text-xs font-normal text-[#7b897a]">
-                      Optional
-                    </span>
-                  </label>
-                  <textarea
-                    id="notes"
-                    maxLength={2000}
-                    rows={3}
-                    value={session.notes}
-                    onChange={(e) =>
-                      setSession((s) => ({ ...s, notes: e.target.value }))
-                    }
-                    placeholder="Energy, technique cues, small wins…"
-                    className="mt-3 w-full resize-y rounded-xl border border-[#dfe5dc] bg-[#fafbf8] p-3 text-sm"
-                  />
-                </section>
-                <p className="mt-5 text-center text-xs leading-5 text-[#7b897a]">
-                  {cloud
-                    ? "Your workout saves online. Check the save status before closing this page."
-                    : "Saved on this browser only · Sample history is marked mock."}
-                  <br />
-                  {cloud
-                    ? "Local prototype records stay separate from your account."
-                    : "Use cloud account for separate signed-in records. Public signup is unavailable."}
-                </p>
-              </>
-            )}
-          </>
-        )}
+                          )}
+                        </section>
+                      );
+                    })}
+                  </div>
+                  <section className="mt-6 rounded-2xl border border-[#dfe5dc] bg-white p-5">
+                    <label htmlFor="notes" className="font-bold">
+                      How did it feel?
+                      <span className="ml-2 text-xs font-normal text-[#7b897a]">
+                        Optional
+                      </span>
+                    </label>
+                    <textarea
+                      id="notes"
+                      maxLength={2000}
+                      rows={3}
+                      value={session.notes}
+                      onChange={(e) =>
+                        setSession((s) => ({ ...s, notes: e.target.value }))
+                      }
+                      placeholder="Energy, technique cues, small wins…"
+                      className="mt-3 w-full resize-y rounded-xl border border-[#dfe5dc] bg-[#fafbf8] p-3 text-sm"
+                    />
+                  </section>
+                  <p className="mt-5 text-center text-xs leading-5 text-[#7b897a]">
+                    {cloud
+                      ? "Your workout saves online. Check the save status before closing this page."
+                      : "Saved on this browser only · Sample history is marked mock."}
+                    <br />
+                    {cloud
+                      ? "Local prototype records stay separate from your account."
+                      : "Use cloud account for separate signed-in records. Public signup is unavailable."}
+                  </p>
+                </>
+              )}
+            </>
+          )}
+        </fieldset>
       </main>
       <nav
         aria-label="Main navigation"
@@ -1025,69 +1046,71 @@ function FormScreen({ cloud }: { cloud?: CloudBinding }) {
       </nav>
       {section === "workouts" && view === "workout" && !session.finished && (
         <footer className="fixed inset-x-0 bottom-[calc(72px+env(safe-area-inset-bottom))] border-t border-[#dce3d7] bg-white px-4 pb-3 pt-3">
-          <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-2 sm:gap-4">
-            <button
-              className={`${button} px-2 text-[#57775d]`}
-              aria-label="Start or restart rest timer"
-              disabled={!restDuration}
-              onClick={startTimer}
-            >
-              <Timer size={20} />
-              <span className="min-w-10 tabular-nums">
-                {deadline
-                  ? `${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, "0")}`
-                  : remaining === 0
-                    ? "Rest"
-                    : "Ready"}
-              </span>
-            </button>
-            <select
-              aria-label="Rest duration"
-              className="min-h-11 rounded-xl bg-[#f0f3eb] px-2 text-xs"
-              value={restDuration}
-              onChange={(e) => {
-                const duration = Number(e.target.value);
-                setRestDuration(duration);
-                if (!duration) {
-                  setDeadline(null);
-                  setRemaining(0);
-                }
-              }}
-            >
-              <option value={0}>Off</option>
-              <option value={60}>60s</option>
-              <option value={90}>90s</option>
-              <option value={120}>120s</option>
-              <option value={180}>180s</option>
-            </select>
-            {deadline && (
+          <fieldset className="contents" disabled={cloud?.locked}>
+            <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-2 sm:gap-4">
               <button
-                aria-label="Stop timer"
-                className="min-h-11 min-w-11"
-                onClick={() => {
-                  setDeadline(null);
-                  setRemaining(0);
+                className={`${button} px-2 text-[#57775d]`}
+                aria-label="Start or restart rest timer"
+                disabled={!restDuration}
+                onClick={startTimer}
+              >
+                <Timer size={20} />
+                <span className="min-w-10 tabular-nums">
+                  {deadline
+                    ? `${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, "0")}`
+                    : remaining === 0
+                      ? "Rest"
+                      : "Ready"}
+                </span>
+              </button>
+              <select
+                aria-label="Rest duration"
+                className="min-h-11 rounded-xl bg-[#f0f3eb] px-2 text-xs"
+                value={restDuration}
+                onChange={(e) => {
+                  const duration = Number(e.target.value);
+                  setRestDuration(duration);
+                  if (!duration) {
+                    setDeadline(null);
+                    setRemaining(0);
+                  }
                 }}
               >
-                <X size={16} />
+                <option value={0}>Off</option>
+                <option value={60}>60s</option>
+                <option value={90}>90s</option>
+                <option value={120}>120s</option>
+                <option value={180}>180s</option>
+              </select>
+              {deadline && (
+                <button
+                  aria-label="Stop timer"
+                  className="min-h-11 min-w-11"
+                  onClick={() => {
+                    setDeadline(null);
+                    setRemaining(0);
+                  }}
+                >
+                  <X size={16} />
+                </button>
+              )}
+              <button
+                disabled={completedSides === 0}
+                className={`${button} ml-auto bg-[#244b3c] px-4 text-white disabled:cursor-not-allowed disabled:opacity-40 sm:px-6`}
+                onClick={() =>
+                  completed < counts.total ? setConfirmFinish(true) : finish()
+                }
+              >
+                Finish workout
+                <Check size={17} />
               </button>
-            )}
-            <button
-              disabled={completedSides === 0}
-              className={`${button} ml-auto bg-[#244b3c] px-4 text-white disabled:cursor-not-allowed disabled:opacity-40 sm:px-6`}
-              onClick={() =>
-                completed < counts.total ? setConfirmFinish(true) : finish()
-              }
-            >
-              Finish workout
-              <Check size={17} />
-            </button>
-          </div>
-          <span role="status" className="sr-only">
-            {!deadline && remaining === 0
-              ? "Rest timer stopped or complete"
-              : ""}
-          </span>
+            </div>
+            <span role="status" className="sr-only">
+              {!deadline && remaining === 0
+                ? "Rest timer stopped or complete"
+                : ""}
+            </span>
+          </fieldset>
         </footer>
       )}
       {historyExercise && (
@@ -1155,6 +1178,7 @@ function FormScreen({ cloud }: { cloud?: CloudBinding }) {
             </p>
             <button
               autoFocus
+              disabled={cloud?.locked}
               className={`${button} w-full bg-[#244b3c] text-white`}
               onClick={finish}
             >

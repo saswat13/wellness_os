@@ -3,7 +3,7 @@ import { expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
 test.use({ expectedApiStatuses: [401, 404, 409, 412, 503] });
 const saved = (page: Page) =>
-  expect(page.getByText("Saved on server", { exact: true })).toBeVisible();
+  expect(page.getByRole("status", { name: "Save status" })).toHaveText("Saved");
 async function signIn(page: Page, user: "A" | "B" = "A") {
   await page.goto("/?mode=cloud");
   await page
@@ -12,10 +12,8 @@ async function signIn(page: Page, user: "A" | "B" = "A") {
   await page
     .getByRole("button", { name: `Sign in as pilot ${user}`, exact: true })
     .click();
-  await expect(
-    page.getByText(`Cloud account · pilot-${user}`, { exact: true }),
-  ).toBeVisible();
   await saved(page);
+  expect((await auth(page)).subject).toBe(`pilot-${user}`);
 }
 async function section(page: Page, name: string) {
   await page.getByRole("button", { name, exact: true }).click();
@@ -31,6 +29,61 @@ async function api(page: Page, path: string) {
   expect(r.status()).toBe(200);
   return r.json();
 }
+
+test("cloud header stays compact and account actions belong in Settings", async ({
+  page,
+}) => {
+  await signIn(page);
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect(
+      page.locator("header").getByRole("status", { name: "Save status" }),
+    ).toHaveText("Saved");
+    await expect(
+      page.getByRole("button", { name: "Sign out", exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      page.getByRole("button", { name: "Start new workout", exact: true }),
+    ).toHaveCount(0);
+    await expect(page.getByText(/Cloud account ·/)).toHaveCount(0);
+    await expect(
+      page.getByText(/Pending edits stay on this device/),
+    ).toHaveCount(0);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      ),
+    ).toBe(true);
+  }
+  await section(page, "Settings");
+  const account = page.getByRole("region", { name: "Account", exact: true });
+  await expect(
+    account.getByRole("button", { name: "Sign out", exact: true }),
+  ).toBeEnabled();
+  await expect(
+    account.getByRole("link", { name: "Switch account", exact: true }),
+  ).toBeVisible();
+  await expect(
+    account.getByRole("button", { name: "Use local demo", exact: true }),
+  ).toBeVisible();
+  await section(page, "Workouts");
+  await expect(
+    page.getByRole("button", { name: "Start new workout", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", {
+      name: "Load earlier workout history",
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  await section(page, "History");
+  await expect(
+    page.getByRole("button", {
+      name: "Load earlier workout history",
+      exact: true,
+    }),
+  ).toBeVisible();
+});
 
 test("A signs in, logs asymmetric sets, refreshes/resumes, completes once and preserves local stores", async ({
   page,
@@ -51,6 +104,7 @@ test("A signs in, logs asymmetric sets, refreshes/resumes, completes once and pr
     ),
   );
   await signIn(page);
+  await section(page, "Workouts");
   await page
     .getByRole("button", { name: "Start new workout", exact: true })
     .click();
@@ -230,6 +284,7 @@ test("B cannot read or modify A's records; expiration clears private UI", async 
   browser,
 }) => {
   await signIn(page);
+  await section(page, "Workouts");
   await page
     .getByRole("button", { name: "Start new workout", exact: true })
     .click();
@@ -270,18 +325,19 @@ test("B cannot read or modify A's records; expiration clears private UI", async 
       other.getByRole("link", { name: "Sign in to FORM", exact: true }),
     ).toBeVisible();
     await expect(
-      other.getByText("Cloud account · pilot-B", { exact: true }),
+      other.getByRole("status", { name: "Save status" }),
     ).toHaveCount(0);
   } finally {
     await context.close();
   }
+  await section(page, "Settings");
   await page.getByRole("button", { name: "Sign out", exact: true }).click();
   await expect(
     page.getByRole("link", { name: "Sign in to FORM", exact: true }),
   ).toBeVisible();
-  await expect(
-    page.getByText("Cloud account · pilot-A", { exact: true }),
-  ).toHaveCount(0);
+  await expect(page.getByRole("status", { name: "Save status" })).toHaveCount(
+    0,
+  );
 });
 
 test("cross-tab account switching clears old visible records", async ({
@@ -291,6 +347,7 @@ test("cross-tab account switching clears old visible records", async ({
   const tab = await page.context().newPage();
   await tab.goto("/?mode=cloud");
   await saved(tab);
+  await section(tab, "Settings");
   await tab.getByRole("link", { name: "Switch account", exact: true }).click();
   await expect(
     page.getByRole("link", { name: "Sign in to FORM", exact: true }),
@@ -298,16 +355,15 @@ test("cross-tab account switching clears old visible records", async ({
   await tab
     .getByRole("button", { name: "Sign in as pilot B", exact: true })
     .click();
-  await expect(
-    tab.getByText("Cloud account · pilot-B", { exact: true }),
-  ).toBeVisible();
+  await saved(tab);
+  expect((await auth(tab)).subject).toBe("pilot-B");
   await saved(tab);
   await expect(
     page.getByRole("link", { name: "Sign in to FORM", exact: true }),
   ).toBeVisible();
-  await expect(
-    page.getByText("Cloud account · pilot-A", { exact: true }),
-  ).toHaveCount(0);
+  await expect(page.getByRole("status", { name: "Save status" })).toHaveCount(
+    0,
+  );
   await tab.close();
 });
 
@@ -315,6 +371,7 @@ test("custom exercises and reusable templates save through the UI without rewrit
   page,
 }) => {
   await signIn(page);
+  await section(page, "Workouts");
   await page
     .getByRole("button", { name: "Start new workout", exact: true })
     .click();
@@ -554,6 +611,7 @@ test("revision conflicts pause writes; lost responses retry without duplicating 
   page,
 }) => {
   await signIn(page);
+  await section(page, "Workouts");
   await page
     .getByRole("button", { name: "Start new workout", exact: true })
     .click();
@@ -576,9 +634,7 @@ test("revision conflicts pause writes; lost responses retry without duplicating 
   await page
     .getByRole("textbox", { name: /How did it feel/ })
     .fill("Pending local notes");
-  await expect(
-    page.getByText("Save conflict · paused", { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByText("Save paused", { exact: true })).toBeVisible();
   expect((await api(page, `/workouts/sessions/${id}`)).data.notes).toBe(
     "Other device notes",
   );
@@ -616,7 +672,7 @@ test("revision conflicts pause writes; lost responses retry without duplicating 
     .click();
   await page.getByRole("button", { name: "Log portion", exact: true }).click();
   await expect(
-    page.getByText("Failed · pending edits kept on device", {
+    page.getByText("Couldn’t save", {
       exact: true,
     }),
   ).toBeVisible();
@@ -638,13 +694,9 @@ test("revision conflicts pause writes; lost responses retry without duplicating 
 });
 
 const pendingState = (page: Page) =>
-  expect(
-    page.getByText("Pending · saved on this device", { exact: true }),
-  ).toBeVisible();
+  expect(page.getByText("Unsaved changes", { exact: true })).toBeVisible();
 const failedState = (page: Page) =>
-  expect(
-    page.getByText("Failed · pending edits kept on device", { exact: true }),
-  ).toBeVisible();
+  expect(page.getByText("Couldn’t save", { exact: true })).toBeVisible();
 const journal = (page: Page, who = "pilot-A") =>
   page.evaluate(
     (who) =>
@@ -652,6 +704,7 @@ const journal = (page: Page, who = "pilot-A") =>
     who,
   );
 async function failedWorkout(page: Page, note: string) {
+  await section(page, "Workouts");
   await page
     .getByRole("button", { name: "Start new workout", exact: true })
     .click();
@@ -801,9 +854,7 @@ test("pending revisions survive refresh and conflict without overwriting another
   await page
     .getByRole("button", { name: "Retry cloud save", exact: true })
     .click();
-  await expect(
-    page.getByText("Save conflict · paused", { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByText("Save paused", { exact: true })).toBeVisible();
   expect((await api(page, `/workouts/sessions/${id}`)).data.notes).toBe(
     "Newer device notes",
   );
@@ -827,6 +878,7 @@ test("logout and account switching retain A's recovery privately; B cannot see o
     (url) => url.pathname === "/" && url.search === "?mode=cloud",
     { waitUntil: "load" },
   );
+  await section(page, "Settings");
   await page.getByRole("button", { name: "Sign out", exact: true }).click();
   await loggedOut;
   await expect(
@@ -847,6 +899,7 @@ test("logout and account switching retain A's recovery privately; B cannot see o
   expect(
     (await page.request.get(`/api/v1/workouts/sessions/${id}`)).status(),
   ).toBe(404);
+  await section(page, "Settings");
   await page.getByRole("link", { name: "Switch account", exact: true }).click();
   await page
     .getByRole("button", { name: "Sign in as pilot A", exact: true })
@@ -893,6 +946,7 @@ test("device storage failure blocks writes and exposes a private recovery downlo
   page,
 }) => {
   await signIn(page);
+  await section(page, "Workouts");
   await page
     .getByRole("button", { name: "Start new workout", exact: true })
     .click();
@@ -913,9 +967,7 @@ test("device storage failure blocks writes and exposes a private recovery downlo
   await page
     .getByRole("textbox", { name: /How did it feel/ })
     .fill("Download unprotected edit");
-  await expect(
-    page.getByText("Failed · device recovery unavailable", { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByText("Couldn’t save", { exact: true })).toBeVisible();
   expect(writes).toBe(0);
   const download = page.waitForEvent("download");
   await page
@@ -950,6 +1002,7 @@ test("starting a workout after a lost acknowledgement survives refresh without c
       });
     } else await route.fulfill({ response });
   });
+  await section(page, "Workouts");
   await page
     .getByRole("button", { name: "Start new workout", exact: true })
     .click();
@@ -973,6 +1026,7 @@ test("completion acknowledgement loss cannot create another completed generation
   page,
 }) => {
   await signIn(page);
+  await section(page, "Workouts");
   await page
     .getByRole("button", { name: "Start new workout", exact: true })
     .click();

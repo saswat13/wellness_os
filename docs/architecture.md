@@ -166,3 +166,9 @@ Cloud bootstrap reads collections/entities sequentially, including each collecti
 continuation pages, followed by seven sequential diary-day reads. This keeps a single
 bootstrap from exceeding the backend's bounded Lambda concurrency without increasing
 infrastructure capacity. Mutation and pending-journal behavior are unchanged.
+
+`CloudBinding` supplies presentation slots for header save status, actionable save
+notices, account settings and contextual workout/history/recipe controls. The account
+boundary retains authentication and recovery handlers; the screen places each slot.
+Editable content and workout completion remain disabled while cloud state is locked.
+Navigation, Settings account controls and recovery actions remain available when locked.

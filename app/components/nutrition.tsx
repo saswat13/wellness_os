@@ -1,6 +1,11 @@
 "use client";
 import type { Day } from "@/lib/cloud-workspace";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useState,
+  type Dispatch,
+  type SetStateAction,
+  type ReactNode,
+} from "react";
 import {
   Plus,
   Search,
@@ -424,12 +429,14 @@ export function Nutrition({
   onDateChange,
   serverDay,
   cloud = false,
+  recipeHistory,
 }: NutritionProps & {
   onGoals: () => void;
   quickLog?: boolean;
   cloud?: boolean;
   onDateChange?: (date: string) => void;
   serverDay?: Day | null;
+  recipeHistory?: ReactNode;
 }) {
   const [tab, setTab] = useState<"Diary" | "Foods" | "Recipes">("Diary");
   const [date, setDate] = useState(() => today(store.user.timeZone));
@@ -741,7 +748,10 @@ export function Nutrition({
       ) : tab === "Foods" ? (
         <Foods store={store} setStore={setStore} onPick={pick} />
       ) : (
-        <Recipes store={store} setStore={setStore} onPick={pick} />
+        <>
+          <Recipes store={store} setStore={setStore} onPick={pick} />
+          {recipeHistory}
+        </>
       )}
     </div>
   );

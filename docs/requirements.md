@@ -139,3 +139,9 @@ server-side authentication must retain their existing behavior.
 Cloud account bootstrap must fit bounded backend concurrency. Collection pagination
 and all seven diary days must complete without an unbounded request burst; failures
 must remain visible and must not discard pending data.
+
+Cloud account UI uses a compact save indicator in the FORM header. Account switching,
+sign-out and the local demo are available in Settings; raw account identifiers and
+persistent recovery instructions are absent from the normal screen. Workout creation,
+unfinished-workout selection, earlier history and recipe versions belong in their
+respective sections. Save failures retain explicit retry, download and discard actions.
