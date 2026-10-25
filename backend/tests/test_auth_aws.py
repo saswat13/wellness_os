@@ -394,6 +394,72 @@ class DurableSessionTests(unittest.TestCase):
         self.assertNotIn(marker, logs)
         self.assertNotIn("PRIVATE-ACCESS-TOKEN", logs)
 
+    def test_bff_forwards_bodyless_get_and_preserves_mutation_payload(self):
+        cookie = self.login()["cookie"]
+        tokens = self.manager.tokens(cookie)
+        info = self.manager.session_info(cookie)
+        requests = []
+
+        def upstream(request):
+            requests.append(request)
+            return httpx.Response(200, json={"data": {"items": []}})
+
+        original_client = httpx.Client
+        transport = httpx.MockTransport(upstream)
+        with (
+            patch("form_backend.aws.runtime.sessions", return_value=self.manager),
+            patch(
+                "form_backend.aws.runtime.httpx.Client",
+                side_effect=lambda **kwargs: original_client(transport=transport, **kwargs),
+            ),
+            patch.dict(
+                "os.environ",
+                {"DOMAIN_API_ORIGIN": "https://api-id.execute-api.us-east-1.amazonaws.com"},
+            ),
+        ):
+            # Neither an absent body nor a caller-supplied GET body is forwarded.
+            for fields in ({}, {"body": '{"ignored":true}'}):
+                result = bff_handler(
+                    self.event(
+                        "GET",
+                        "/api/v1/nutrition/foods",
+                        cookie,
+                        rawQueryString="limit=1&cursor=opaque%2Bcursor",
+                        **fields,
+                    ),
+                    None,
+                )
+                self.assertEqual(result["statusCode"], 200)
+                self.assertEqual(result["headers"]["X-Form-Subject"], "user-A")
+                sent = requests[-1]
+                self.assertEqual(sent.method, "GET")
+                self.assertEqual(sent.url.path, "/v1/nutrition/foods")
+                self.assertEqual(dict(sent.url.params), {"limit": "1", "cursor": "opaque+cursor"})
+                self.assertEqual(sent.headers["authorization"], "Bearer " + tokens.access_token)
+                self.assertEqual(sent.content, b"")
+                self.assertNotIn("transfer-encoding", sent.headers)
+                self.assertNotIn("content-length", sent.headers)
+
+            payload = '{"name":"Mock food"}'
+            result = bff_handler(
+                self.event(
+                    "POST",
+                    "/api/v1/nutrition/foods",
+                    cookie,
+                    body=payload,
+                    headers={
+                        "origin": self.manager.config.origin,
+                        "x-csrf-token": info["csrfToken"],
+                        "content-type": "application/json",
+                        "idempotency-key": "test-mutation-key",
+                    },
+                ),
+                None,
+            )
+            self.assertEqual(result["statusCode"], 200)
+            self.assertEqual(requests[-1].content, payload.encode())
+            self.assertEqual(requests[-1].headers["idempotency-key"], "test-mutation-key")
+
     def test_bff_upstream_503_logs_only_status_and_correlation_ids(self):
         cookie = self.login()["cookie"]
         marker = "UPSTREAM-PRIVATE-DETAIL"

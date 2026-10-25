@@ -155,3 +155,9 @@ The local cloud-mode frontend and infrastructure definitions are not production
 authorization or proof of live backend behavior. AWS account-specific deployment and
 recovery artifacts are intentionally excluded from this public repository. See the
 [sanitized AWS status summary](aws-public-status.md).
+
+Authenticated cloud reads pass from `CloudClient` (`/api/v1/...`) through the BFF to
+`/v1/...` on the domain API. BFF GET forwarding has no request body: the parser's
+synthetic `{}` default is only for local validation. Mutation payloads and query
+parameters are preserved. A gateway response without FORM's `error.code` is displayed
+as `REQUEST_FAILED`; that fallback alone does not identify a storage failure.

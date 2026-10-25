@@ -131,3 +131,7 @@ Account-specific deployment evidence is maintained locally and excluded from the
 repository. Local and cloud data modes remain separate; a deployed frontend does not
 establish authenticated backend acceptance. See the
 [sanitized AWS status summary](aws-public-status.md).
+
+Authenticated BFF GET requests must be forwarded without a payload, including when
+an incoming GET supplies a body. Mutation JSON, pagination queries and trusted
+server-side authentication must retain their existing behavior.

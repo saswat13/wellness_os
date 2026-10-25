@@ -312,7 +312,13 @@ def bff_handler(event, context):
         forwarded["authorization"] = "Bearer " + tokens.access_token
         with httpx.Client(timeout=25, follow_redirects=False) as http:
             upstream = http.request(
-                method, origin + internal, params=query, content=body, headers=forwarded
+                method,
+                origin + internal,
+                params=query,
+                # request() supplies "{}" for local model parsing, not a GET payload.
+                # Do not send that synthetic body (or caller GET bodies) through gateways.
+                content=None if method == "GET" else body,
+                headers=forwarded,
             )
         if upstream.status_code >= 500:
             upstream_request_id = next(

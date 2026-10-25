@@ -128,3 +128,17 @@ or resource has been modified. Any provisioning requires explicit authorization.
 
 Stop after local integration review. No bootstrap, IAM binding, deployment, real migration
 or invitations are authorized by Milestone 1.2.
+
+## Authenticated cloud read forwarding correction
+
+- [x] Remove synthetic/caller GET payloads from BFF upstream requests while retaining mutation bodies.
+- [x] Add HTTPX transport regression coverage for foods GET pagination/authentication and POST payload fidelity.
+- [x] Cover the frontend generic-gateway 503 `REQUEST_FAILED` fallback without invalidating the account.
+- [ ] Verify the reported deployed 503 against live correlation logs and a controlled release; local tests do not establish the live cause.
+
+Local validation: 132 backend and 56 frontend unit tests pass; Ruff, Mypy,
+frontend lint/typecheck, contract check, production build, arm64 asset verification
+and offline CDK synthesis pass. Infrastructure tests: 8 pass, 2 require the excluded
+account-specific deployment-support template. Browser suites executed with system
+Chromium: 21 local and 16 cloud tests fail the existing missing-favicon console
+assertion. No AWS resources or deployment configuration were changed.

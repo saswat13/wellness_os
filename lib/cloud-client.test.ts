@@ -102,10 +102,14 @@ test("unbound gateway errors preserve retry state but unbound successful data is
   const client = new CloudClient(async (input) =>
     input === "/auth/session"
       ? session("user-A")
-      : Response.json({}, { status }),
+      : Response.json({ message: "Service Unavailable" }, { status }),
   );
-  await assert.rejects(client.request("/v1/me"), /API_503/);
+  await assert.rejects(
+    client.request("/v1/nutrition/foods"),
+    /API_503: REQUEST_FAILED \(GET \/v1\/nutrition\/foods\)/,
+  );
   assert.equal(client.subject, "user-A");
+  assert.equal(client.cached("/v1/nutrition/foods"), undefined);
   status = 200;
   await assert.rejects(client.request("/v1/me"), /ACCOUNT_CHANGED/);
   assert.equal(client.subject, null);
