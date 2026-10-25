@@ -47,6 +47,7 @@ def timestamp(v):
 
 ID = Annotated[str, Field(min_length=1, max_length=128)]
 Name = Annotated[str, Field(min_length=1, max_length=120)]
+Aliases = Annotated[tuple[Name, ...], Field(max_length=20)]
 Amount = Annotated[
     Decimal,
     BeforeValidator(numeric),
@@ -137,6 +138,9 @@ class Nutrients(Model):
 class Exercise(Model):
     id: ID
     name: Name
+    aliases: Aliases = ()
+    external_id: ID | None = None
+    source_info: Annotated[str, Field(max_length=500)] = ""
     primary_muscle: Muscle | None = None
     secondary_muscles: tuple[Muscle, ...] = ()
     movement_pattern: Pattern | None = None
@@ -354,6 +358,8 @@ class EntryPatch(Model):
 class Food(Model):
     id: ID
     name: Name
+    aliases: Aliases = ()
+    external_id: ID | None = None
     preparation: Preparation
     per100g: Nutrients = Field(alias="per100g")
     source_info: Annotated[str, Field(max_length=500)] = ""

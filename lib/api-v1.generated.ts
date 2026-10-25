@@ -5,6 +5,9 @@ export type Schemas = {
   ExerciseResource: {
     id: string;
     name: string;
+    aliases?: Array<string>;
+    externalId?: string | null;
+    sourceInfo?: string;
     primaryMuscle?:
       | "Chest"
       | "Lats"
@@ -84,6 +87,9 @@ export type Schemas = {
   Exercise: {
     id: string;
     name: string;
+    aliases?: Array<string>;
+    externalId?: string | null;
+    sourceInfo?: string;
     primaryMuscle?:
       | "Chest"
       | "Lats"
@@ -146,6 +152,9 @@ export type Schemas = {
   };
   ExercisePatch: {
     name?: string | null;
+    aliases?: Array<string> | null;
+    externalId?: string | null;
+    sourceInfo?: string | null;
     primaryMuscle?:
       | "Chest"
       | "Lats"
@@ -250,6 +259,8 @@ export type Schemas = {
   FoodResource: {
     id: string;
     name: string;
+    aliases?: Array<string>;
+    externalId?: string | null;
     preparation: "raw" | "cooked" | "dry" | "packaged";
     per100g: Schemas["Nutrients"];
     sourceInfo?: string;
@@ -274,6 +285,8 @@ export type Schemas = {
   Food: {
     id: string;
     name: string;
+    aliases?: Array<string>;
+    externalId?: string | null;
     preparation: "raw" | "cooked" | "dry" | "packaged";
     per100g: Schemas["Nutrients"];
     sourceInfo?: string;
@@ -281,6 +294,8 @@ export type Schemas = {
   };
   FoodPatch: {
     name?: string | null;
+    aliases?: Array<string> | null;
+    externalId?: string | null;
     preparation?: "raw" | "cooked" | "dry" | "packaged" | null;
     per100g?: Schemas["Nutrients"] | null;
     sourceInfo?: string | null;
@@ -289,6 +304,8 @@ export type Schemas = {
   FoodSnapshot: {
     id: string;
     name: string;
+    aliases?: Array<string>;
+    externalId?: string | null;
     preparation: "raw" | "cooked" | "dry" | "packaged";
     per100g: Schemas["Nutrients"];
     sourceInfo?: string;
@@ -373,6 +390,9 @@ export type Schemas = {
   ExerciseSnapshot: {
     id: string;
     name: string;
+    aliases?: Array<string>;
+    externalId?: string | null;
+    sourceInfo?: string;
     primaryMuscle?:
       | "Chest"
       | "Lats"

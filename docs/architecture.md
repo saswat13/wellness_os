@@ -172,3 +172,16 @@ notices, account settings and contextual workout/history/recipe controls. The ac
 boundary retains authentication and recovery handlers; the screen places each slot.
 Editable content and workout completion remain disabled while cloud state is locked.
 Navigation, Settings account controls and recovery actions remain available when locked.
+
+## Shared launch catalogs
+
+`backend/catalog/launch-v1` contains a deterministic, pinned 400/400 bundle with
+selected source excerpts, provenance hashes and a quality report. Additive optional
+aliases/external IDs are exposed by the existing exercise/food read models; source
+information accompanies attribution. Existing DynamoCatalog key layout, custom-first
+pagination and system-record write protections remain. The offline importer checks shared partitions for duplicate names/source IDs,
+preflights exact catalog keys, refuses unmanaged/modified rows and uses revision/hash/payload
+conditions for writes. It never touches private keys or historical snapshots.
+`lib/catalog-search.ts` unifies normalized token/alias search in the current interfaces.
+The loopback fake BFF accepts an explicit catalog fixture solely for browser checks.
+See the bundle README for mirror provenance and the future authorized release order.

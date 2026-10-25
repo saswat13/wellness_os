@@ -44,7 +44,7 @@ class Clock:
 
 
 class LocalApplication:
-    def __init__(self, origin, upstream):
+    def __init__(self, origin, upstream, catalog_bundle=None):
         self.origin, self.upstream = origin, upstream
         self.clock = Clock()
         self.uow = MemoryUnitOfWork(self.clock)
@@ -95,6 +95,15 @@ class LocalApplication:
             ),
             clock=self.clock,
         )
+        if catalog_bundle is not None:
+            from form_backend.catalog import load_bundle, validate_bundle
+
+            entries = validate_bundle(load_bundle(catalog_bundle))
+            self.catalog = MemoryCatalog(
+                exercises=tuple(v for kind, v in entries if kind == "exercise"),
+                foods=tuple(v for kind, v in entries if kind == "food"),
+                clock=self.clock,
+            )
         self.api = API(
             Service(self.uow, self.training, self.nutrition, self.accounts, self.catalog)
         )
@@ -289,10 +298,13 @@ def main():
     parser.add_argument("--fake-auth", action="store_true", required=True)
     parser.add_argument("--port", type=int, default=3001)
     parser.add_argument("--frontend-port", type=int, default=3000)
+    parser.add_argument(
+        "--catalog-bundle", help="Explicit local-only catalog fixture; never writes AWS"
+    )
     args = parser.parse_args()
     if args.port != 3001 or args.frontend_port != 3000:
         parser.error("Only loopback ports 3001 -> 3000 are allowlisted")
-    app = LocalApplication("http://127.0.0.1:3001", 3000)
+    app = LocalApplication("http://127.0.0.1:3001", 3000, args.catalog_bundle)
     server = ThreadingHTTPServer(("127.0.0.1", 3001), Handler)
     server.app = app
     print("FORM offline fake BFF: http://127.0.0.1:3001; explicit test identities only", flush=True)

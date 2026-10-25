@@ -145,3 +145,13 @@ sign-out and the local demo are available in Settings; raw account identifiers a
 persistent recovery instructions are absent from the normal screen. Workout creation,
 unfinished-workout selection, earlier history and recipe versions belong in their
 respective sections. Save failures retain explicit retry, download and discard actions.
+
+## Shared launch catalogs
+
+Provide 400 attributed strength exercises and 400 USDA reference foods in existing
+shared catalog partitions, separate from private/custom data. Food values are per
+100 g with explicit raw/dry/cooked/packaged states and original FDC IDs. Search includes
+aliases and source IDs. Imports default to validation/dry-run, use conditional writes,
+reject unmanaged collisions and never rewrite logged snapshots or side values.
+No images, live seeding, deployment, IAM changes or infrastructure are authorized by
+local implementation. See `backend/catalog/launch-v1/README.md` for provenance caveats.

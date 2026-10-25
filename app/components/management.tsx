@@ -34,6 +34,7 @@ import {
   startSession,
   templateFromSession,
 } from "@/lib/tracker";
+import { matchesCatalogSearch } from "@/lib/catalog-search";
 export const control =
   "min-h-11 w-full rounded-xl border border-[#dfe5dc] bg-[#fafbf8] px-3 py-2 text-sm";
 export const action =
@@ -76,17 +77,16 @@ export function ExerciseLibrary({
         e.trainingTypes.includes(type as Exercise["trainingTypes"][number])) &&
       (!tag || e.tags.includes(tag)) &&
       (!source || e.source === source) &&
-      [
+      matchesCatalogSearch(search, [
         e.name,
+        ...(e.aliases ?? []),
+        e.externalId,
         e.primaryMuscle,
         ...e.secondaryMuscles,
         e.equipment,
         e.movementPattern,
         ...e.tags,
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(search.toLowerCase().trim()),
+      ]),
   );
   const tags = Array.from(
     new Set(
@@ -283,6 +283,14 @@ export function ExerciseLibrary({
                 <p className="mt-2 text-xs text-[#6c7c6e]">
                   Secondary: {e.secondaryMuscles.join(", ")}
                 </p>
+              )}
+              {e.source === "system" && e.sourceInfo && (
+                <details className="mt-2 text-xs text-[#6c7c6e]">
+                  <summary className="min-h-11 cursor-pointer py-3">
+                    Source attribution
+                  </summary>
+                  <p className="break-words">{e.sourceInfo}</p>
+                </details>
               )}
               <div className="mt-2 flex flex-wrap gap-1">
                 {e.tags.map((t) => (

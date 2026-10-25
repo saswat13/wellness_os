@@ -28,6 +28,8 @@ export const foodSchema = z
     ownerId: id.nullable(),
     source: z.enum(["system", "custom"]),
     name: z.string().trim().min(1).max(120),
+    aliases: z.array(z.string().trim().min(1).max(120)).max(20).optional(),
+    externalId: z.string().min(1).max(128).nullable().optional(),
     preparation: z.enum(preparations),
     per100g: nutrientsSchema,
     sourceInfo: z.string().max(500),

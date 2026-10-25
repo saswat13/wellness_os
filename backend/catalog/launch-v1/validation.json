@@ -1,0 +1,49 @@
+{
+  "scope": "Local only; no deployed AWS resources or application data changed",
+  "bundleSha256": "488c8c4f870d8fcc1215c82db83aab898cb7225362afb862e8ed8b575e727025",
+  "seed": {
+    "mode": "apply",
+    "counts": {
+      "create": 800,
+      "update": 0,
+      "unchanged": 0,
+      "conflict": 0
+    },
+    "items": 800,
+    "repeatImport": {
+      "mode": "apply",
+      "counts": {
+        "create": 0,
+        "update": 0,
+        "unchanged": 800,
+        "conflict": 0
+      },
+      "items": 800
+    },
+    "applicationApiCounts": {
+      "exercise": 400,
+      "food": 400
+    }
+  },
+  "checks": {
+    "backendTestsPassed": 144,
+    "frontendUnitTestsPassed": 59,
+    "browserTestsPassed": 39,
+    "lint": "passed",
+    "ruff": "passed",
+    "mypy": "passed",
+    "typecheck": "passed",
+    "contracts": "passed",
+    "productionBuild": "passed",
+    "staticExport": "passed",
+    "arm64AssetElfCheck": "passed",
+    "offlineSynth": "passed",
+    "infrastructureTests": {
+      "passed": 8,
+      "failed": 2,
+      "reason": "Account-specific deployment-support.template.json intentionally excluded from public repository"
+    },
+    "pinnedSourceRebuild": "byte-identical",
+    "officialUsdaArchiveCrossCheck": "outstanding; official downloads blocked; pinned mirror recorded"
+  }
+}

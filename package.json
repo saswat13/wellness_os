@@ -13,6 +13,7 @@
     "format": "prettier --write app lib tests docs *.md *.json *.mjs playwright.config.ts",
     "build:static": "FORM_STATIC_EXPORT=1 next build --webpack",
     "test:e2e:cloud": "playwright test --config playwright.cloud.config.ts",
+    "test:e2e:catalog": "playwright test --config playwright.catalog.config.ts",
     "contracts:check": "python3 backend/scripts/generate_typescript.py --check"
   },
   "dependencies": {

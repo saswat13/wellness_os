@@ -1,5 +1,6 @@
 "use client";
 import type { Day } from "@/lib/cloud-workspace";
+import { matchesCatalogSearch } from "@/lib/catalog-search";
 import {
   useState,
   type Dispatch,
@@ -220,7 +221,12 @@ export function FoodPicker({
   const foods = store.foods.filter(
     (f) =>
       (f.ownerId === null || f.ownerId === store.user.id) &&
-      f.name.toLowerCase().includes(search.toLowerCase()) &&
+      matchesCatalogSearch(search, [
+        f.name,
+        f.preparation,
+        ...(f.aliases ?? []),
+        f.externalId,
+      ]) &&
       (!preparation || f.preparation === preparation) &&
       (filter === "all" ||
         (filter === "favorites" && store.favorites.includes(f.id)) ||
@@ -287,8 +293,20 @@ export function FoodPicker({
               <span className="block font-semibold">{f.name}</span>
               <span className="text-xs capitalize text-[#6c7c6e]">
                 {f.preparation} · {fmt(f.per100g.calories)} kcal / 100 g
-                {f.source === "custom" ? " · custom" : " · mock"}
+                {f.source === "custom"
+                  ? " · custom"
+                  : f.externalId
+                    ? " · USDA"
+                    : " · mock"}
               </span>
+              {f.source === "system" && f.externalId && (
+                <span
+                  className="block text-xs text-[#6c7c6e]"
+                  title={f.sourceInfo}
+                >
+                  USDA FoodData Central · FDC {f.externalId}
+                </span>
+              )}
             </button>
             {onFavorite && (
               <button
@@ -981,8 +999,9 @@ function Foods({
           </div>
         ))}
       <p className="text-xs text-[#7b897a]">
-        System foods contain mock values. Create your own foods from package or
-        source values for this prototype.
+        {store.foods.some((f) => f.source === "system" && f.externalId)
+          ? "Reference nutrition is per 100 g. Match the preparation state and check current package labels. Custom foods stay separate."
+          : "System foods contain mock values. Create your own foods from package or source values for this prototype."}
       </p>
     </div>
   );

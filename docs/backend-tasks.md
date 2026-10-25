@@ -165,3 +165,21 @@ Cleanup validation: 57 unit tests, 21 local browser tests and 17 cloud browser t
 pass. Lint, typecheck, production build and static export pass. Mobile static-export
 screens were inspected for the header and Settings layout. No backend, infrastructure,
 IAM or application-data changes; frontend publication remains separate.
+
+## Shared catalog launch (local implementation)
+
+- [x] Prepare 400 strength exercises and 400 USDA foods with source IDs, attribution and no images.
+- [x] Add strict nutrition/state normalization, duplicate checks and conditional importer-owned upserts.
+- [x] Verify the isolated Moto import is idempotent and both application APIs return all 400 shared records through pagination.
+- [x] Preserve private/custom records, frozen snapshots and independent unilateral side values during shared updates.
+- [x] Add backward-compatible API models and alias/source-ID search to the existing interfaces.
+- [ ] Cross-check the pinned USDA mirror files against an official USDA download when network access permits.
+- [ ] Release the code and seed the existing catalog through an explicitly authorized operator; verify all launch IDs through the live APIs. No live changes were made during local implementation.
+
+Catalog validation: 144 backend tests, 59 frontend unit tests and 39 browser tests
+pass, including the launch-bundle UI fixture. Ruff/Mypy, lint/typecheck, contracts,
+production/static builds, arm64 ELF asset checks and offline synth pass. Eight
+infrastructure tests pass; two need the intentionally excluded deployment-support
+template. The pinned source rebuild is byte-identical; official USDA archive
+cross-checking remains outstanding. Full local evidence is in the bundle
+`validation.json`; no production API verification or live seeding is claimed.
