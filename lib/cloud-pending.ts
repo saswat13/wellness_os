@@ -1,12 +1,13 @@
 /** Private pending cloud data only. Never stores credentials or touches prototype keys. */
 import { z } from "zod";
 import { writeSnapshot, PersistenceConflict } from "./persistence";
+import { packRecovery, unpackRecovery } from "./recovery-codec";
 export const PENDING_PREFIX = "form-cloud-pending-v1:";
 export const pendingKey = (subject: string) =>
   PENDING_PREFIX + encodeURIComponent(subject);
 const envelope = z
   .object({
-    version: z.literal(1),
+    version: z.union([z.literal(1), z.literal(2)]),
     subject: z.string().min(1).max(128),
     updatedAt: z.string().datetime(),
     recovery: z.unknown(),
@@ -46,18 +47,20 @@ function lease(
       if (raw.length > 2_000_000) throw new Error("PENDING_DATA_INVALID");
       const value = envelope.parse(JSON.parse(raw));
       if (value.subject !== subject) throw new Error("PENDING_OWNER_MISMATCH");
-      return value.recovery;
+      return value.version === 2
+        ? unpackRecovery(value.recovery)
+        : value.recovery;
     },
     write(recovery) {
       guard();
       const raw = JSON.stringify({
-        version: 1,
+        version: 2,
         subject,
         updatedAt: new Date().toISOString(),
-        recovery,
+        recovery: packRecovery(recovery),
       });
       if (raw.length > 2_000_000) throw new Error("PENDING_DATA_TOO_LARGE");
-      expected = writeSnapshot(
+      const written = writeSnapshot(
         storage,
         key,
         expected,
@@ -65,7 +68,9 @@ function lease(
         (value) => envelope.parse(value),
       );
       // Do not claim durability if a storage shim silently discards/replaces the write.
-      if (storage.getItem(key) !== raw) throw new Error("PENDING_WRITE_FAILED");
+      if (storage.getItem(key) !== written)
+        throw new Error("PENDING_WRITE_FAILED");
+      expected = written;
     },
     clear() {
       guard();
@@ -107,6 +112,7 @@ export class MemoryPendingStore implements PendingStore {
   readonly values = new Map<string, string>();
   private locks = new Set<string>();
   failWrites = false;
+  dropWrites = false;
   async open(subject: string) {
     if (this.locks.has(subject)) return null;
     this.locks.add(subject);
@@ -115,6 +121,7 @@ export class MemoryPendingStore implements PendingStore {
         getItem: (key) => this.values.get(key) ?? null,
         setItem: (key, value) => {
           if (this.failWrites) throw new Error("PENDING_WRITE_FAILED");
+          if (this.dropWrites) return;
           this.values.set(key, value);
         },
         removeItem: (key) => {

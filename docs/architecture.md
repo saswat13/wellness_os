@@ -185,3 +185,10 @@ conditions for writes. It never touches private keys or historical snapshots.
 `lib/catalog-search.ts` unifies normalized token/alias search in the current interfaces.
 The loopback fake BFF accepts an explicit catalog fixture solely for browser checks.
 See the bundle README for mirror provenance and the future authorized release order.
+
+Recovery envelopes now write version 2 using a bounded, lossless JSON string table,
+while retaining existing account-scoped keys and decoding version 1. The storage
+lease confirms read-back before advancing its expected checkpoint. Controllers keep
+the same complete recovery structures and explicit-retry semantics. Workout and
+Nutrition navigation sit outside editing fieldsets so genuine storage failures do
+not block browsing. See `docs/recovery-storage-fix.md` for release/backup guidance.

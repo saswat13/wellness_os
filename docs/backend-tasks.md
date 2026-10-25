@@ -183,3 +183,16 @@ infrastructure tests pass; two need the intentionally excluded deployment-suppor
 template. The pinned source rebuild is byte-identical; official USDA archive
 cross-checking remains outstanding. Full local evidence is in the bundle
 `validation.json`; no production API verification or live seeding is claimed.
+
+## Full-catalog recovery journal follow-up
+
+- Reproduced Couldn't save after adding a launch exercise with all 800 catalog entries loaded.
+- Add bounded lossless recovery encoding, backward-compatible journal reads and confirmed-write checkpoint advancement.
+- Keep subnavigation available during real storage failures without enabling editing or automatic replay.
+- Frontend-only release; preserve the deployed catalog, backend and user data.
+
+Recovery fix validation: 63 unit tests and 40 browser tests pass (21 local, 17 cloud,
+2 full-catalog scenarios). Lint/typecheck and the production build pass; the new
+catalog regression failed on the old implementation and passes with compact recovery,
+including explicit retry after refresh with identical mutation key/revision/body.
+No backend, catalog, IAM or deployed data changes are part of this fix.

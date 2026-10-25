@@ -338,6 +338,33 @@ function FormScreen({ cloud }: { cloud?: CloudBinding }) {
     setDeadline(null);
     window.scrollTo(0, 0);
   };
+  const workoutNavigation = (
+    <nav
+      aria-label="FORM sections"
+      className="mb-5 flex gap-1 rounded-2xl border border-[#dfe5dc] bg-white p-1"
+    >
+      {(["workout", "library", "templates", "history"] as const).map(
+        (section) => (
+          <button
+            key={section}
+            aria-current={view === section ? "page" : undefined}
+            className={`${button} min-w-0 flex-1 px-2 text-xs sm:px-3 sm:text-sm ${view === section ? "bg-[#244b3c] text-white" : "text-[#6c7c6e]"}`}
+            onClick={() => {
+              navigate("workouts", section);
+            }}
+          >
+            {section === "workout"
+              ? "Workout"
+              : section === "library"
+                ? "Library"
+                : section === "templates"
+                  ? "Templates"
+                  : "History"}
+          </button>
+        ),
+      )}
+    </nav>
+  );
   if (!ready)
     return <main className="mx-auto max-w-3xl p-8">Loading FORM…</main>;
   return (
@@ -409,9 +436,12 @@ function FormScreen({ cloud }: { cloud?: CloudBinding }) {
           </div>
         )}
         {cloud?.saveNotice}
+        {section === "workouts" && workoutNavigation}
         <fieldset
           className="contents"
-          disabled={cloud?.locked && section !== "settings"}
+          disabled={
+            cloud?.locked && section !== "settings" && section !== "nutrition"
+          }
         >
           {section === "home" ? (
             <Home
@@ -430,6 +460,7 @@ function FormScreen({ cloud }: { cloud?: CloudBinding }) {
               onDateChange={cloud?.loadDay}
               serverDay={cloud?.day}
               recipeHistory={cloud?.recipeHistory}
+              readOnly={cloud?.locked}
             />
           ) : section === "progress" ? (
             <Progress tracker={store} nutrition={nutrition} />
@@ -444,31 +475,6 @@ function FormScreen({ cloud }: { cloud?: CloudBinding }) {
             />
           ) : (
             <>
-              <nav
-                aria-label="FORM sections"
-                className="mb-5 flex gap-1 rounded-2xl border border-[#dfe5dc] bg-white p-1"
-              >
-                {(["workout", "library", "templates", "history"] as const).map(
-                  (section) => (
-                    <button
-                      key={section}
-                      aria-current={view === section ? "page" : undefined}
-                      className={`${button} min-w-0 flex-1 px-2 text-xs sm:px-3 sm:text-sm ${view === section ? "bg-[#244b3c] text-white" : "text-[#6c7c6e]"}`}
-                      onClick={() => {
-                        navigate("workouts", section);
-                      }}
-                    >
-                      {section === "workout"
-                        ? "Workout"
-                        : section === "library"
-                          ? "Library"
-                          : section === "templates"
-                            ? "Templates"
-                            : "History"}
-                    </button>
-                  ),
-                )}
-              </nav>
               {view === "workout" && cloud?.workoutControls}
               {view === "history" && cloud?.historyControls}
               {view === "workout" && (

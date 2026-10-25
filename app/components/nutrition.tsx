@@ -448,6 +448,7 @@ export function Nutrition({
   serverDay,
   cloud = false,
   recipeHistory,
+  readOnly = false,
 }: NutritionProps & {
   onGoals: () => void;
   quickLog?: boolean;
@@ -455,6 +456,7 @@ export function Nutrition({
   onDateChange?: (date: string) => void;
   serverDay?: Day | null;
   recipeHistory?: ReactNode;
+  readOnly?: boolean;
 }) {
   const [tab, setTab] = useState<"Diary" | "Foods" | "Recipes">("Diary");
   const [date, setDate] = useState(() => today(store.user.timeZone));
@@ -528,249 +530,254 @@ export function Nutrition({
           </button>
         ))}
       </nav>
-      {message && (
-        <p role="status" className="rounded-xl bg-[#edf1e7] p-3 text-sm">
-          {message}
-        </p>
-      )}
-      {tab === "Diary" ? (
-        <>
-          <div className="flex min-w-0 items-center justify-between gap-2">
-            <button
-              className={action}
-              aria-label="Previous diary day"
-              onClick={() => {
-                changeDate(shiftDate(date, -1));
-              }}
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <input
-              className="min-h-11 min-w-0 flex-1 rounded-xl border border-[#dfe5dc] bg-[#fafbf8] px-2 py-2 text-xs"
-              aria-label="Diary date"
-              type="date"
-              required
-              value={date}
-              onChange={(e) => {
-                changeDate(e.target.value);
-              }}
+      <fieldset className="min-w-0 space-y-5" disabled={readOnly}>
+        {message && (
+          <p role="status" className="rounded-xl bg-[#edf1e7] p-3 text-sm">
+            {message}
+          </p>
+        )}
+        {tab === "Diary" ? (
+          <>
+            <div className="flex min-w-0 items-center justify-between gap-2">
+              <button
+                className={action}
+                aria-label="Previous diary day"
+                onClick={() => {
+                  changeDate(shiftDate(date, -1));
+                }}
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <input
+                className="min-h-11 min-w-0 flex-1 rounded-xl border border-[#dfe5dc] bg-[#fafbf8] px-2 py-2 text-xs"
+                aria-label="Diary date"
+                type="date"
+                required
+                value={date}
+                onChange={(e) => {
+                  changeDate(e.target.value);
+                }}
+              />
+              <button
+                className={action}
+                aria-label="Next diary day"
+                onClick={() => {
+                  changeDate(shiftDate(date, 1));
+                }}
+              >
+                <ChevronRight size={18} />
+              </button>
+              <button
+                className={`${action} px-2`}
+                onClick={() => changeDate(today(store.user.timeZone))}
+              >
+                Today
+              </button>
+            </div>
+            <NutritionSummary
+              totals={
+                serverDay?.date === date
+                  ? serverDay.totals
+                  : dayTotals(store, date)
+              }
+              goals={
+                serverDay?.date === date
+                  ? (serverDay.goals ?? {
+                      calories: 0,
+                      protein: 0,
+                      carbs: 0,
+                      fat: 0,
+                    })
+                  : store.goals
+              }
+              onGoals={onGoals}
             />
-            <button
-              className={action}
-              aria-label="Next diary day"
-              onClick={() => {
-                changeDate(shiftDate(date, 1));
-              }}
-            >
-              <ChevronRight size={18} />
-            </button>
-            <button
-              className={`${action} px-2`}
-              onClick={() => changeDate(today(store.user.timeZone))}
-            >
-              Today
-            </button>
-          </div>
-          <NutritionSummary
-            totals={
-              serverDay?.date === date
-                ? serverDay.totals
-                : dayTotals(store, date)
-            }
-            goals={
-              serverDay?.date === date
-                ? (serverDay.goals ?? {
-                    calories: 0,
-                    protein: 0,
-                    carbs: 0,
-                    fat: 0,
-                  })
-                : store.goals
-            }
-            onGoals={onGoals}
-          />
-          {logging ? (
-            picked ? (
-              <PortionLogger
-                key={`${picked.type}-${picked.id}`}
-                store={store}
-                {...picked}
-                date={date}
-                meal={meal}
-                onCancel={() => setPicked(null)}
-                onSave={(grams, meal, loggedDate) => {
+            {logging ? (
+              picked ? (
+                <PortionLogger
+                  key={`${picked.type}-${picked.id}`}
+                  store={store}
+                  {...picked}
+                  date={date}
+                  meal={meal}
+                  onCancel={() => setPicked(null)}
+                  onSave={(grams, meal, loggedDate) => {
+                    if (
+                      update(
+                        () =>
+                          logPortion(
+                            store,
+                            picked.type,
+                            picked.id,
+                            grams,
+                            meal,
+                            loggedDate,
+                          ),
+                        "Portion logged. Daily totals updated.",
+                      )
+                    ) {
+                      setLogging(false);
+                      setPicked(null);
+                      setDate(loggedDate);
+                      onDateChange?.(loggedDate);
+                    }
+                  }}
+                />
+              ) : (
+                <div className={panel}>
+                  <div className="mb-3 flex items-center justify-between">
+                    <h2 className="font-bold">
+                      Add food to {meal.toLowerCase()}
+                    </h2>
+                    <button
+                      className={action}
+                      onClick={() => setLogging(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  <FoodPicker
+                    store={store}
+                    onPick={pick}
+                    onFavorite={(id) => update(() => toggleFavorite(store, id))}
+                  />
+                  <p className="mt-3 text-xs text-[#6c7c6e]">
+                    Match the food’s raw, cooked, dry or packaged state to the
+                    grams you weigh.
+                  </p>
+                </div>
+              )
+            ) : (
+              <button
+                className={primary}
+                onClick={() => {
+                  setMeal("Snacks");
+                  setLogging(true);
+                  setEditing(null);
+                }}
+              >
+                <Plus size={16} />
+                Log food
+              </button>
+            )}
+            {editing && (
+              <DiaryEditor
+                key={editing.id}
+                entry={editing}
+                onCancel={() => setEditing(null)}
+                onSave={(patch) => {
                   if (
                     update(
-                      () =>
-                        logPortion(
-                          store,
-                          picked.type,
-                          picked.id,
-                          grams,
-                          meal,
-                          loggedDate,
-                        ),
-                      "Portion logged. Daily totals updated.",
+                      () => editDiary(store, editing.id, patch),
+                      "Diary entry updated using its original nutrition values.",
                     )
                   ) {
-                    setLogging(false);
-                    setPicked(null);
-                    setDate(loggedDate);
-                    onDateChange?.(loggedDate);
+                    setDate(patch.date);
+                    onDateChange?.(patch.date);
+                    setEditing(null);
                   }
                 }}
               />
-            ) : (
-              <div className={panel}>
-                <div className="mb-3 flex items-center justify-between">
-                  <h2 className="font-bold">
-                    Add food to {meal.toLowerCase()}
-                  </h2>
-                  <button className={action} onClick={() => setLogging(false)}>
-                    Cancel
-                  </button>
-                </div>
-                <FoodPicker
-                  store={store}
-                  onPick={pick}
-                  onFavorite={(id) => update(() => toggleFavorite(store, id))}
-                />
-                <p className="mt-3 text-xs text-[#6c7c6e]">
-                  Match the food’s raw, cooked, dry or packaged state to the
-                  grams you weigh.
-                </p>
-              </div>
-            )
-          ) : (
-            <button
-              className={primary}
-              onClick={() => {
-                setMeal("Snacks");
-                setLogging(true);
-                setEditing(null);
-              }}
-            >
-              <Plus size={16} />
-              Log food
-            </button>
-          )}
-          {editing && (
-            <DiaryEditor
-              key={editing.id}
-              entry={editing}
-              onCancel={() => setEditing(null)}
-              onSave={(patch) => {
-                if (
-                  update(
-                    () => editDiary(store, editing.id, patch),
-                    "Diary entry updated using its original nutrition values.",
-                  )
-                ) {
-                  setDate(patch.date);
-                  onDateChange?.(patch.date);
-                  setEditing(null);
-                }
-              }}
-            />
-          )}
-          <div className="grid gap-4 sm:grid-cols-2">
-            {meals.map((m) => {
-              const rows = entries.filter((e) => e.meal === m);
-              return (
-                <section key={m} className={panel}>
-                  <div className="mb-2 flex items-center justify-between gap-2">
-                    <div>
-                      <h2 className="font-bold">{m}</h2>
-                      <p className="text-xs text-[#6c7c6e]">
-                        {fmt(sum(rows.map(entryNutrition)).calories)} kcal
-                      </p>
-                    </div>
-                    <button
-                      className={`${action} text-[#57775d]`}
-                      aria-label={`Add food to ${m}`}
-                      onClick={() => {
-                        setMeal(m);
-                        setLogging(true);
-                        window.scrollTo(0, 0);
-                        setPicked(null);
-                        setEditing(null);
-                      }}
-                    >
-                      <Plus size={16} />
-                      Add
-                    </button>
-                  </div>
-                  {rows.length ? (
-                    rows.map((e) => (
-                      <div
-                        key={e.id}
-                        className="border-t border-[#edf1e7] py-3"
-                      >
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="min-w-0">
-                            <p className="break-words text-sm font-semibold">
-                              {e.snapshot.name}
-                            </p>
-                            <p className="mt-1 text-xs capitalize text-[#6c7c6e]">
-                              {fmt(e.grams)} g · {e.snapshot.preparation}
-                              {e.sourceType === "recipe" ? " recipe" : ""}
-                            </p>
-                          </div>
-                          <div className="flex shrink-0">
-                            <button
-                              className={`${action} px-2`}
-                              aria-label={`Edit diary ${e.snapshot.name}`}
-                              onClick={() => {
-                                setEditing(e);
-                                setLogging(false);
-                                window.scrollTo(0, 0);
-                              }}
-                            >
-                              <Pencil size={16} />
-                            </button>
-                            <button
-                              className={`${action} px-2`}
-                              aria-label={`Delete diary ${e.snapshot.name}`}
-                              onClick={() => {
-                                if (
-                                  window.confirm(
-                                    `Delete ${e.snapshot.name} from this day?`,
-                                  )
-                                )
-                                  update(
-                                    () => deleteDiary(store, e.id),
-                                    "Diary entry deleted.",
-                                  );
-                              }}
-                            >
-                              <Trash2 size={16} />
-                            </button>
-                          </div>
-                        </div>
-                        <NutritionNumbers value={entryNutrition(e)} />
+            )}
+            <div className="grid gap-4 sm:grid-cols-2">
+              {meals.map((m) => {
+                const rows = entries.filter((e) => e.meal === m);
+                return (
+                  <section key={m} className={panel}>
+                    <div className="mb-2 flex items-center justify-between gap-2">
+                      <div>
+                        <h2 className="font-bold">{m}</h2>
+                        <p className="text-xs text-[#6c7c6e]">
+                          {fmt(sum(rows.map(entryNutrition)).calories)} kcal
+                        </p>
                       </div>
-                    ))
-                  ) : (
-                    <p className={`py-3 ${muted}`}>Nothing logged yet.</p>
-                  )}
-                </section>
-              );
-            })}
-          </div>
-          <p className="text-xs leading-5 text-[#7b897a]">
-            {cloud
-              ? "Cloud diary · nutrition snapshots are calculated and retained by the server. Unsaved changes require a connection."
-              : "Seeded meals and system food values are illustrative mock data. This diary stores gram-based snapshots in this browser."}
-          </p>
-        </>
-      ) : tab === "Foods" ? (
-        <Foods store={store} setStore={setStore} onPick={pick} />
-      ) : (
-        <>
-          <Recipes store={store} setStore={setStore} onPick={pick} />
-          {recipeHistory}
-        </>
-      )}
+                      <button
+                        className={`${action} text-[#57775d]`}
+                        aria-label={`Add food to ${m}`}
+                        onClick={() => {
+                          setMeal(m);
+                          setLogging(true);
+                          window.scrollTo(0, 0);
+                          setPicked(null);
+                          setEditing(null);
+                        }}
+                      >
+                        <Plus size={16} />
+                        Add
+                      </button>
+                    </div>
+                    {rows.length ? (
+                      rows.map((e) => (
+                        <div
+                          key={e.id}
+                          className="border-t border-[#edf1e7] py-3"
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="min-w-0">
+                              <p className="break-words text-sm font-semibold">
+                                {e.snapshot.name}
+                              </p>
+                              <p className="mt-1 text-xs capitalize text-[#6c7c6e]">
+                                {fmt(e.grams)} g · {e.snapshot.preparation}
+                                {e.sourceType === "recipe" ? " recipe" : ""}
+                              </p>
+                            </div>
+                            <div className="flex shrink-0">
+                              <button
+                                className={`${action} px-2`}
+                                aria-label={`Edit diary ${e.snapshot.name}`}
+                                onClick={() => {
+                                  setEditing(e);
+                                  setLogging(false);
+                                  window.scrollTo(0, 0);
+                                }}
+                              >
+                                <Pencil size={16} />
+                              </button>
+                              <button
+                                className={`${action} px-2`}
+                                aria-label={`Delete diary ${e.snapshot.name}`}
+                                onClick={() => {
+                                  if (
+                                    window.confirm(
+                                      `Delete ${e.snapshot.name} from this day?`,
+                                    )
+                                  )
+                                    update(
+                                      () => deleteDiary(store, e.id),
+                                      "Diary entry deleted.",
+                                    );
+                                }}
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          </div>
+                          <NutritionNumbers value={entryNutrition(e)} />
+                        </div>
+                      ))
+                    ) : (
+                      <p className={`py-3 ${muted}`}>Nothing logged yet.</p>
+                    )}
+                  </section>
+                );
+              })}
+            </div>
+            <p className="text-xs leading-5 text-[#7b897a]">
+              {cloud
+                ? "Cloud diary · nutrition snapshots are calculated and retained by the server. Unsaved changes require a connection."
+                : "Seeded meals and system food values are illustrative mock data. This diary stores gram-based snapshots in this browser."}
+            </p>
+          </>
+        ) : tab === "Foods" ? (
+          <Foods store={store} setStore={setStore} onPick={pick} />
+        ) : (
+          <>
+            <Recipes store={store} setStore={setStore} onPick={pick} />
+            {recipeHistory}
+          </>
+        )}
+      </fieldset>
     </div>
   );
 }

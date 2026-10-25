@@ -45,3 +45,42 @@ test("oversized or failed journal writes preserve the last complete recovery rec
   assert.equal(store.values.get(pendingKey("A")), original);
   a.close();
 });
+
+test("legacy journals remain readable and migrate only on an explicit successful write", async () => {
+  const store = new MemoryPendingStore();
+  const legacy = JSON.stringify({
+    version: 1,
+    subject: "A",
+    updatedAt: "2026-10-25T00:00:00.000Z",
+    recovery: { notes: "legacy private edits", key: "original-key" },
+  });
+  store.values.set(pendingKey("A"), legacy);
+  const a = (await store.open("A"))!;
+  assert.deepEqual(a.read(), {
+    notes: "legacy private edits",
+    key: "original-key",
+  });
+  assert.equal(store.values.get(pendingKey("A")), legacy);
+  a.write(a.read());
+  assert.equal(JSON.parse(store.values.get(pendingKey("A"))!).version, 2);
+  assert.deepEqual(a.read(), {
+    notes: "legacy private edits",
+    key: "original-key",
+  });
+  a.close();
+});
+
+test("an unconfirmed discarded storage write can be retried without adopting a false checkpoint", async () => {
+  const store = new MemoryPendingStore();
+  const a = (await store.open("A"))!;
+  a.read();
+  a.write({ notes: "last durable edits" });
+  const before = store.values.get(pendingKey("A"));
+  store.dropWrites = true;
+  assert.throws(() => a.write({ notes: "new edits" }), /WRITE_FAILED/);
+  assert.equal(store.values.get(pendingKey("A")), before);
+  store.dropWrites = false;
+  a.write({ notes: "new edits" });
+  assert.deepEqual(a.read(), { notes: "new edits" });
+  a.close();
+});

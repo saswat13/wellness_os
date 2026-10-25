@@ -155,3 +155,8 @@ aliases and source IDs. Imports default to validation/dry-run, use conditional w
 reject unmanaged collisions and never rewrite logged snapshots or side values.
 No images, live seeding, deployment, IAM changes or infrastructure are authorized by
 local implementation. See `backend/catalog/launch-v1/README.md` for provenance caveats.
+
+Cloud recovery must support the full launch catalog without repeating its text past
+the journal storage bound. Version-1 journals remain readable; size failures must not
+clear old recovery data or falsely acknowledge a write. Paused saving must allow
+navigation while keeping editing disabled and retaining current unsaved data.

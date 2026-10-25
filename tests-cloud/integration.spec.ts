@@ -969,6 +969,20 @@ test("device storage failure blocks writes and exposes a private recovery downlo
     .fill("Download unprotected edit");
   await expect(page.getByText("Couldn’t save", { exact: true })).toBeVisible();
   expect(writes).toBe(0);
+  await section(page, "Library");
+  await expect(
+    page.getByRole("button", { name: "Library", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
+  await section(page, "Nutrition");
+  await section(page, "Foods");
+  await expect(
+    page.getByRole("button", { name: "Foods", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
+  await section(page, "Workouts");
+  await expect(
+    page.getByRole("textbox", { name: /How did it feel/ }),
+  ).toHaveValue("Download unprotected edit");
+  expect(writes).toBe(0);
   const download = page.waitForEvent("download");
   await page
     .getByRole("button", { name: "Download pending cloud edits", exact: true })
