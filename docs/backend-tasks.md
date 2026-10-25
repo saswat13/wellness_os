@@ -142,3 +142,14 @@ and offline CDK synthesis pass. Infrastructure tests: 8 pass, 2 require the excl
 account-specific deployment-support template. Browser suites executed with system
 Chromium: 21 local and 16 cloud tests fail the existing missing-favicon console
 assertion. No AWS resources or deployment configuration were changed.
+
+## Cloud bootstrap capacity follow-up
+
+- [x] Serialize initial collection/entity reads and the seven diary-day reads.
+- [x] Reproduce capacity-limited bootstrap failure, then verify ready state and every required read without overlap.
+- [ ] Release the updated frontend through existing hosting and verify the complete authenticated cloud screen. The operator reported the BFF-only update already deployed; preserve its live changes.
+
+Follow-up checks: 57 frontend unit tests, lint, typecheck, production build and
+static export pass. The representative static-site/fake-BFF browser journey
+completed its functional assertions but fails the existing console assertion on
+the missing favicon 404. Live full-screen acceptance remains outstanding.

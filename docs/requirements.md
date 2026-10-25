@@ -135,3 +135,7 @@ establish authenticated backend acceptance. See the
 Authenticated BFF GET requests must be forwarded without a payload, including when
 an incoming GET supplies a body. Mutation JSON, pagination queries and trusted
 server-side authentication must retain their existing behavior.
+
+Cloud account bootstrap must fit bounded backend concurrency. Collection pagination
+and all seven diary days must complete without an unbounded request burst; failures
+must remain visible and must not discard pending data.

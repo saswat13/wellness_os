@@ -12,7 +12,9 @@ function fixture(
   completedHistory = false,
   pendingStore = new MemoryPendingStore(),
   failPath?: string,
+  readCapacity = Infinity,
 ) {
+  const reads = { active: 0, peak: 0, rejected: 0, paths: [] as string[] };
   let subject = "pilot-A",
     lost = false,
     hold: ((response: Response) => void) | null = null;
@@ -175,10 +177,36 @@ function fixture(
     return page([]);
   };
   const createController = () =>
-    new CloudController(new FormApi(new CloudClient(fetcher)), pendingStore);
+    new CloudController(
+      new FormApi(
+        new CloudClient(async (input, options) => {
+          if (readCapacity === Infinity || !String(input).startsWith("/api/"))
+            return fetcher(input, options);
+          reads.paths.push(String(input));
+          reads.active++;
+          reads.peak = Math.max(reads.peak, reads.active);
+          try {
+            if (reads.active > readCapacity) {
+              reads.rejected++;
+              return Response.json(
+                { message: "Service Unavailable" },
+                { status: 503 },
+              );
+            }
+            // Hold each invocation open so simultaneous reads contend for capacity.
+            await new Promise((resolve) => setTimeout(resolve, 0));
+            return await fetcher(input, options);
+          } finally {
+            reads.active--;
+          }
+        }),
+      ),
+      pendingStore,
+    );
   const controller = createController();
   return {
     controller,
+    reads,
     writes,
     sessions,
     pendingStore,
@@ -212,6 +240,43 @@ function fixture(
     },
   };
 }
+
+test("cloud bootstrap fits bounded backend capacity across collections and seven diary days", async () => {
+  const f = fixture(false, new MemoryPendingStore(), undefined, 1);
+  try {
+    await f.controller.discover();
+    assert.equal(f.controller.snapshot().phase, "ready");
+    assert.equal(f.reads.rejected, 0);
+    assert.equal(f.reads.peak, 1);
+    assert.equal(f.reads.active, 0);
+    const paths = f.reads.paths.map(
+      (path) => new URL(path, "https://form.test"),
+    );
+    for (const path of [
+      "/api/v1/workouts/exercises",
+      "/api/v1/nutrition/foods",
+      "/api/v1/workouts/templates",
+      "/api/v1/nutrition/recipes",
+      "/api/v1/workouts/sessions/active",
+      "/api/v1/me",
+      "/api/v1/nutrition/goals",
+    ])
+      assert.ok(
+        paths.some((url) => url.pathname === path),
+        path,
+      );
+    const days = paths.filter(
+      (url) => url.pathname === "/api/v1/nutrition/diary",
+    );
+    assert.equal(days.length, 7);
+    assert.equal(
+      new Set(days.map((url) => url.searchParams.get("date"))).size,
+      7,
+    );
+  } finally {
+    f.controller.dispose();
+  }
+});
 
 test("discovery reports the failed API route without exposing query parameters", async () => {
   const f = fixture(

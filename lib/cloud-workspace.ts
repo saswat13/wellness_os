@@ -414,20 +414,19 @@ export class CloudWorkspace {
   }
   async load(): Promise<CloudData> {
     this.guard();
-    const [ex, foods, templates, recipes, active, profile, goals] =
-      await Promise.all([
-        this.api.all("GET /v1/workouts/exercises"),
-        this.api.all("GET /v1/nutrition/foods"),
-        this.api.all("GET /v1/workouts/templates"),
-        this.api.all("GET /v1/nutrition/recipes"),
-        this.api.all("GET /v1/workouts/sessions/active"),
-        this.optional(() => this.api.call("GET /v1/me")),
-        this.optional(() =>
-          this.api.call("GET /v1/nutrition/goals", {
-            query: { date: "9999-12-31" },
-          }),
-        ),
-      ]);
+    // Bootstrap must fit the backend's bounded Lambda concurrency. Each collection
+    // includes its continuation pages; finish it before starting the next read.
+    const ex = await this.api.all("GET /v1/workouts/exercises");
+    const foods = await this.api.all("GET /v1/nutrition/foods");
+    const templates = await this.api.all("GET /v1/workouts/templates");
+    const recipes = await this.api.all("GET /v1/nutrition/recipes");
+    const active = await this.api.all("GET /v1/workouts/sessions/active");
+    const profile = await this.optional(() => this.api.call("GET /v1/me"));
+    const goals = await this.optional(() =>
+      this.api.call("GET /v1/nutrition/goals", {
+        query: { date: "9999-12-31" },
+      }),
+    );
     this.guard();
     ex.forEach((r) => {
       exercise(r, this.subject);
@@ -509,9 +508,7 @@ export class CloudWorkspace {
       candidates.find((s) => s.id === requested) ?? candidates[0];
     if (selected) this.data.tracker.session = workout(selected, this.subject);
     const day = today(user.timeZone);
-    await Promise.all(
-      Array.from({ length: 7 }, (_, i) => this.readDay(shiftDate(day, -i))),
-    );
+    for (let i = 0; i < 7; i++) await this.readDay(shiftDate(day, -i));
     const effective = this.days.get(day)?.goals;
     if (effective)
       this.data.nutrition.goals = {

@@ -15,7 +15,32 @@ Its regression test fails before the patch and passes afterward.
 `REQUEST_FAILED` is the frontend fallback for responses without FORM's
 `error.code`, including generic gateway errors. It does not establish a DynamoDB
 failure or prove that GET forwarding caused the reported live 503. Deployment
-and live acceptance remain unverified.
+and live acceptance require independent evidence.
+
+## Bootstrap request concurrency
+
+The operator's release report confirms the BFF GET-body update was deployed and
+individual authenticated foods requests, including the catalog continuation,
+returned 200. Full bootstrap still failed on varying routes.
+
+The committed infrastructure reserves five concurrent invocations for each Lambda.
+The frontend previously started seven collection/entity reads concurrently, followed
+by another seven concurrent diary reads. Gateway-level Lambda invocation throttling
+can reject a request before the handler runs, so missing handler failure logs do
+not rule it out. This explains a capacity risk in the code; live throttling still
+requires confirmation against the deployed settings and evidence.
+
+The follow-up frontend change reads each bootstrap collection (including all its
+pages) sequentially and then reads the seven diary days sequentially. Its regression
+test simulates a capacity-limited backend and verifies the controller reaches ready,
+all required routes and seven distinct diary dates load, and reads do not overlap.
+It changes no infrastructure, capacity limits, storage or mutation replay behavior.
+
+This follow-up requires a **frontend static-site release**, using the existing
+private hosting/publisher workflow and cache invalidation. A BFF-only ZIP update
+does not publish browser code. Preserve live BFF changes and do not redeploy the
+public infrastructure template. Verify the browser is using the newly built assets,
+then require the full cloud screen to load and all bootstrap reads to return 200.
 
 ## Diagnose from the authenticated deployment environment
 

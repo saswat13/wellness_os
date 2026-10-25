@@ -161,3 +161,8 @@ Authenticated cloud reads pass from `CloudClient` (`/api/v1/...`) through the BF
 synthetic `{}` default is only for local validation. Mutation payloads and query
 parameters are preserved. A gateway response without FORM's `error.code` is displayed
 as `REQUEST_FAILED`; that fallback alone does not identify a storage failure.
+
+Cloud bootstrap reads collections/entities sequentially, including each collection's
+continuation pages, followed by seven sequential diary-day reads. This keeps a single
+bootstrap from exceeding the backend's bounded Lambda concurrency without increasing
+infrastructure capacity. Mutation and pending-journal behavior are unchanged.
